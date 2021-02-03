@@ -1,0 +1,16 @@
+.nav {
+  position: fixed;
+  padding: 1% 10%;
+  background-color: #aaa;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.logo {
+  text-decoration: none;
+  color: #444;
+}

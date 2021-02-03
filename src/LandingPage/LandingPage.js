@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './LandingPage.css';
 
 export class LandingPage extends Component {
@@ -11,9 +12,13 @@ export class LandingPage extends Component {
             Create the perfect color scheme for your project or get inspired by
             popular color palettes created by other users!
           </h3>
-          <button>Start creating!</button>
+          <Link to="/palette-maker">
+            <button>Start creating!</button>
+          </Link>
           <br />
-          <button>Browse popular palettes</button>
+          <Link to="/browse-palettes">
+            <button>Browse popular palettes</button>
+          </Link>
         </header>
 
         <section className="landing-section">
