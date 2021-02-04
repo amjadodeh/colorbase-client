@@ -1,63 +1,24 @@
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import Palette from '../Palette/Palette';
 import './PaletteList.css';
 
 export class PaletteList extends Component {
   render() {
-    return (
-      <div>
-        <div class="container">
-          <div class="color-container">
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-          </div>
-          <div>...</div>
+    if (this.props.userId) {
+      return this.props.palettes.map((palette) => (
+        <div key={uuidv4()}>
+          <Palette palette={palette} userId={this.props.userId} />
         </div>
-
-        <br />
-
-        <div class="container">
-          <div class="color-container">
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-          </div>
-          <div>...</div>
+      ));
+    } else {
+      return this.props.palettes.map((palette) => (
+        <div key={uuidv4()}>
+          <Palette palette={palette} />
         </div>
-
-        <br />
-
-        <div class="container">
-          <div class="color-container">
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-          </div>
-          <div>...</div>
-        </div>
-
-        <br />
-
-        <div class="container">
-          <div class="color-container">
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-            <div class="color"></div>
-          </div>
-          <div>...</div>
-        </div>
-
-        <br />
-      </div>
-    );
+      ));
+    }
   }
 }
 

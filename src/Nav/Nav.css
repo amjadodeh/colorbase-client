@@ -1,16 +1,49 @@
 .nav {
-  position: fixed;
-  padding: 1% 10%;
-  background-color: #aaa;
+  /* position: fixed; */
+  padding: 10px 0 5px 0;
   display: flex;
-  justify-content: space-between;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid #e4e4e4;
 }
 
-.logo {
+/* .nav-menu {
+  margin-top: 6px;
+} */
+
+/* AH! well... I'll fix it later. :) */
+
+.nav-logo {
+  /* position: relative;
+  top: 5%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%); */
+  /* position: absolute;
+  top: 5%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%); */
   text-decoration: none;
-  color: #444;
+  color: #0066ff;
+}
+
+.nav-signin {
+  /* margin-top: 1px; */
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px 10px;
+  background-color: #fff;
+  border-radius: 10%;
+  border: 1px solid #e4e4e4;
+}
+
+.nav-img {
+  position: relative;
+  top: 3px;
+  object-fit: cover;
+  object-position: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
 }

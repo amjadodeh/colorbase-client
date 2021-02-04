@@ -1,27 +1,118 @@
 import React, { Component } from 'react';
+import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
+import Context from '../Context';
+
 import PaletteList from '../PaletteList/PaletteList';
+import './UserPage.css';
 
 export class UserPage extends Component {
+  static contextType = Context;
+
+  state = {
+    changingPicture: false,
+    newPicture: '',
+  };
+
+  checkURL(url) {
+    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+  }
+
+  handleShowInput = () => {
+    this.setState({
+      changingPicture: !this.state.changingPicture,
+    });
+  };
+
+  onChangeUrl = (e) => {
+    this.setState({
+      newPicture: e.target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    if (this.checkURL(this.state.newPicture)) {
+      this.context.handleChangeUserProfilePic();
+    } else {
+      alert('not an image!');
+    }
+  };
+
   render() {
-    return (
-      <div>
-        <header role="banner">
-          <img
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.istockphoto.com%2Fvectors%2Fdefault-avatar-profile-icon-grey-photo-placeholder-vector-id1018999828%3Fb%3D1%26k%3D6%26m%3D1018999828%26s%3D170x170%26h%3Dq4b27rdUaNXiztxGF8LyKN2Ktx4Eb8nSKe7m2UpBpfE%3D&f=1&nofb=1"
-            alt=""
-          />
-          <h1>User</h1>
-        </header>
+    const { signedInAs, users, palettes } = this.context;
+    const { userId } = this.props.match.params;
+    if (signedInAs.user.id === Number(userId)) {
+      return (
+        <div>
+          <Nav />
+          <header role="banner">
+            <img
+              className="user-page-img"
+              src={signedInAs.user.profile_picture}
+              alt="Profile"
+            />
+            <h1>User</h1>
 
-        <hr />
+            {this.state.changingPicture ? (
+              <div>
+                <label htmlFor="user-page-input">Picture Url</label>
+                <input
+                  type="text"
+                  id="user-page-input"
+                  name="picture-url-input"
+                  value={this.state.newPicture}
+                  onChange={this.onChangeUrl}
+                  required
+                />
+                <button onClick={this.handleShowInput}>
+                  Changed your mind?
+                </button>
+                <button onClick={this.handleSubmit}>Submit</button>
+              </div>
+            ) : (
+              <button onClick={this.handleShowInput}>
+                Change profile picture?
+              </button>
+            )}
+          </header>
 
-        <div>Your Palettes</div>
+          <hr />
 
-        <br />
+          <div>Your Palettes</div>
 
-        <PaletteList />
-      </div>
-    );
+          <br />
+
+          <PaletteList palettes={palettes} userId={userId} />
+
+          <Footer />
+        </div>
+      );
+    } else {
+      const user = users.find((user) => user.id === Number(userId));
+      return (
+        <div>
+          <Nav />
+          <header role="banner">
+            <img
+              className="user-page-img"
+              src={user.profile_picture}
+              alt="Profile"
+            />
+            <h1>{user.username}</h1>
+          </header>
+
+          <hr />
+
+          <div>{user.username}'s' Palettes</div>
+
+          <br />
+
+          <PaletteList palettes={palettes} userId={userId} />
+
+          <Footer />
+        </div>
+      );
+    }
   }
 }
 

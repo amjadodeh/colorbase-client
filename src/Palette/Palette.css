@@ -1,0 +1,19 @@
+.palette-container {
+  height: 20%;
+  width: 90%;
+  margin: 0 auto 40px auto;
+  background-color: #eee;
+  border-radius: 5%;
+}
+
+.palette-colors {
+  display: flex;
+  flex-direction: row;
+}
+
+.palette-color {
+  flex: 1;
+  min-height: 200px;
+  padding: 6% 0;
+  background-color: #bbb;
+}

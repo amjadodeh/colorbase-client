@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+
+import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
 import './SignInPage.css';
 
 export class SignInPage extends Component {
   render() {
     return (
-      <div>
-        <section class="signup-section">
+      <>
+        <Nav />
+        <section className="signup-section">
           <header role="banner">
             <h1>Sign up today!</h1>
             <h6>
@@ -13,9 +17,9 @@ export class SignInPage extends Component {
               everyone to enjoy!
             </h6>
           </header>
-          <form class="signup-form">
+          <form className="signup-form">
             <div>
-              <label for="username">Username</label>
+              <label htmlFor="username">Username</label>
               <input
                 placeholder="Your username"
                 type="text"
@@ -24,11 +28,7 @@ export class SignInPage extends Component {
               />
             </div>
             <div>
-              <label for="email">Email</label>
-              <input type="text" name="email" id="email" />
-            </div>
-            <div>
-              <label for="password">Password</label>
+              <label htmlFor="password">Password</label>
               <input type="password" name="password" id="password" />
             </div>
             <button type="submit">Sign Up</button>
@@ -39,19 +39,19 @@ export class SignInPage extends Component {
         <br />
         <br />
 
-        <section class="signin-section">
+        <section className="signin-section">
           <br />
           <h2>Already a member?</h2>
           <h2>Sign in here!</h2>
           <br />
 
-          <form class="signin-form">
+          <form className="signin-form">
             <div>
-              <label for="username">Username/Email</label>
+              <label htmlFor="username">Username</label>
               <input type="text" name="username" id="username" />
             </div>
             <div>
-              <label for="password">Password</label>
+              <label htmlFor="password">Password</label>
               <input type="password" name="password" id="password" />
             </div>
             <button type="submit">Sign Up</button>
@@ -61,7 +61,8 @@ export class SignInPage extends Component {
         </section>
 
         <br />
-      </div>
+        <Footer />
+      </>
     );
   }
 }

@@ -1,19 +1,16 @@
+.palette-maker {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .palette-maker-color {
-  min-height: 200px;
-  padding: 6% 0;
-  background-color: #bbb;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
 }
 
-.palette-maker-color:nth-child(even) {
-  background-color: #ddd;
-}
-
-.palette-maker-color-value {
-  text-align: center;
-  font-size: 18px;
-  background-color: #ddd;
-}
-
-.palette-maker-color-value:nth-child(even) {
-  background-color: #bbb;
+.palette-maker-color > * {
+  height: 5vh;
 }
