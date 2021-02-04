@@ -10,6 +10,7 @@ export class UserPage extends Component {
   static contextType = Context;
 
   state = {
+    signOutVerify: false,
     changingPicture: false,
     newPicture: '',
   };
@@ -22,6 +23,23 @@ export class UserPage extends Component {
     this.setState({
       changingPicture: !this.state.changingPicture,
     });
+  };
+
+  handleClickSignOut = (step, yes) => () => {
+    if (step === 1) {
+      this.setState({
+        signOutVerify: true,
+      });
+    } else if (yes) {
+      this.setState({
+        signOutVerify: false,
+      });
+      this.context.handleSignOutUser();
+    } else {
+      this.setState({
+        signOutVerify: false,
+      });
+    }
   };
 
   onChangeUrl = (e) => {
@@ -41,7 +59,7 @@ export class UserPage extends Component {
   render() {
     const { signedInAs, users, palettes } = this.context;
     const { userId } = this.props.match.params;
-    if (signedInAs.user.id === Number(userId)) {
+    if (signedInAs.user.id === userId) {
       return (
         <div>
           <Nav />
@@ -51,7 +69,7 @@ export class UserPage extends Component {
               src={signedInAs.user.profile_picture}
               alt="Profile"
             />
-            <h1>User</h1>
+            <h1>{signedInAs.user.username}</h1>
 
             {this.state.changingPicture ? (
               <div>
@@ -74,6 +92,15 @@ export class UserPage extends Component {
                 Change profile picture?
               </button>
             )}
+            <br />
+            {this.state.signOutVerify ? (
+              <>
+                <button onClick={this.handleClickSignOut(2, false)}>No</button>
+                <button onClick={this.handleClickSignOut(2, true)}>Yes</button>
+              </>
+            ) : (
+              <button onClick={this.handleClickSignOut(1)}>Sign Out</button>
+            )}
           </header>
 
           <hr />
@@ -88,7 +115,7 @@ export class UserPage extends Component {
         </div>
       );
     } else {
-      const user = users.find((user) => user.id === Number(userId));
+      const user = users.find((user) => user.id === userId);
       return (
         <div>
           <Nav />
