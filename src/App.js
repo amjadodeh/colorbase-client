@@ -23,9 +23,7 @@ class App extends Component {
         username: 'asdfUser',
         profile_picture:
           'https://images.pexels.com/photos/1887946/pexels-photo-1887946.jpeg',
-        client_salt: '$2a$04$RRhLhVs5codgfEkO5kkxmu',
-        hashedPassword:
-          '$2a$04$RRhLhVs5codgfEkO5kkxmu0PDSWWSjLGJguYCUcS1t.ggBxhf6Nbm',
+        password: 'asdfPass',
       },
     ],
     palettes: [
@@ -109,8 +107,7 @@ class App extends Component {
       id: this.state.signedInAs.user.id,
       username: this.state.signedInAs.user.username,
       profile_picture: newProfilePic,
-      client_salt: this.state.signedInAs.user.client_salt,
-      hashedPassword: this.state.signedInAs.user.hashedPassword,
+      password: this.state.signedInAs.user.password,
     };
 
     this.setState({

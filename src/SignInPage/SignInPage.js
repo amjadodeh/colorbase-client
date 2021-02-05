@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Context from '../Context';
-import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import Nav from '../Nav/Nav';
@@ -75,14 +74,12 @@ export class SignInPage extends Component {
       const user = users.find((user) => user.username === username);
 
       if (user) {
-        bcrypt.compare(password, user.hashedPassword, (err, res) => {
-          if (res) {
-            handleSignInUser(user);
-            this.props.history.push(`/user/${user.id}`);
-          } else {
-            return alert('Incorrect password');
-          }
-        });
+        if (password === user.password) {
+          handleSignInUser(user);
+          this.props.history.push(`/user/${user.id}`);
+        } else {
+          return alert('Incorrect password');
+        }
       } else {
         return alert('User does not exist');
       }
@@ -98,30 +95,15 @@ export class SignInPage extends Component {
       const password = this.state.signUp.password;
       const { handleAddNewUser } = this.context;
 
-      bcrypt.genSalt(10, (err, client_salt) => {
-        if (err) {
-          alert('Failed to complete sign up');
-          throw err;
-        } else {
-          bcrypt.hash(password, client_salt, (err, hashedPassword) => {
-            if (err) {
-              alert('Failed to complete sign up');
-              throw err;
-            } else {
-              const newUser = {
-                id: uuidv4(),
-                username: username,
-                profile_picture:
-                  'https://images.pexels.com/photos/1887946/pexels-photo-1887946.jpeg',
-                client_salt: client_salt,
-                hashedPassword: hashedPassword,
-              };
-              handleAddNewUser(newUser);
-              this.props.history.push(`/user/${newUser.id}`);
-            }
-          });
-        }
-      });
+      const newUser = {
+        id: uuidv4(),
+        username: username,
+        profile_picture:
+          'https://images.pexels.com/photos/1887946/pexels-photo-1887946.jpeg',
+        password: password,
+      };
+      handleAddNewUser(newUser);
+      this.props.history.push(`/user/${newUser.id}`);
     } else {
       return alert('Please resolve any mistakes before continuing');
     }

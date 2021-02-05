@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import bcrypt from 'bcryptjs';
 
 import Context from '../Context';
 import Nav from '../Nav/Nav';
@@ -38,18 +37,12 @@ export class UserPage extends Component {
         deletionStarted: false,
       });
     } else if (go === 'DELETE ACCOUNT') {
-      bcrypt.compare(
-        this.state.deletionPass,
-        this.context.signedInAs.user.hashedPassword,
-        (err, res) => {
-          if (res) {
-            this.context.handleDeleteUser(this.context.signedInAs.user.id);
-            this.props.history.push(`/`);
-          } else {
-            return alert('Incorrect password');
-          }
-        }
-      );
+      if (this.state.deletionPass === this.context.signedInAs.user.password) {
+        this.context.handleDeleteUser(this.context.signedInAs.user.id);
+        this.props.history.push(`/`);
+      } else {
+        return alert('Incorrect password');
+      }
     }
   };
 
