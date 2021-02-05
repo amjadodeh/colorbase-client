@@ -116,29 +116,33 @@ export class UserPage extends Component {
       );
     } else {
       const user = users.find((user) => user.id === userId);
-      return (
-        <div>
-          <Nav />
-          <header role="banner">
-            <img
-              className="user-page-img"
-              src={user.profile_picture}
-              alt="Profile"
-            />
-            <h1>{user.username}</h1>
-          </header>
+      if (user) {
+        return (
+          <div>
+            <Nav />
+            <header role="banner">
+              <img
+                className="user-page-img"
+                src={user.profile_picture}
+                alt="Profile"
+              />
+              <h1>{user.username}</h1>
+            </header>
 
-          <hr />
+            <hr />
 
-          <div>{user.username}'s' Palettes</div>
+            <div>{user.username}'s' Palettes</div>
 
-          <br />
+            <br />
 
-          <PaletteList palettes={palettes} userId={userId} />
+            <PaletteList palettes={palettes} userId={userId} />
 
-          <Footer />
-        </div>
-      );
+            <Footer />
+          </div>
+        );
+      } else {
+        return <>{this.props.history.push('/')}</>;
+      }
     }
   }
 }
