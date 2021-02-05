@@ -10,6 +10,7 @@ export class PalettePage extends Component {
 
   state = {
     palette_name: 'My New Palette',
+    copied: 'Copy',
     colors: [],
   };
 
@@ -61,6 +62,12 @@ export class PalettePage extends Component {
     }
   }
 
+  handleChangeName = (e) => {
+    this.setState({
+      palette_name: e.target.value,
+    });
+  };
+
   handleChangeHex = (colorId) => (e) => {
     const changedColors = this.state.colors.map((color) => ({
       id: color.id,
@@ -101,8 +108,40 @@ export class PalettePage extends Component {
     }
   };
 
-  handleCopyHex = (colorHex) => () => {
-    console.log(colorHex);
+  handleUpload = () => {
+    if (this.context.signedInAs.user) {
+      const hexValues = this.state.colors.map((color) => color.colorHex);
+
+      const newPalette = {
+        id: uuidv4(),
+        palette_name: this.state.palette_name,
+        hex: hexValues,
+        user_id: this.context.signedInAs.user.id,
+      };
+      this.context.handleUploadPalette(newPalette);
+      this.props.history.push(`/user/${newPalette.user_id}`);
+    } else {
+      return alert('Please sign in to upload');
+    }
+  };
+
+  handleCopyHex = (colorHex) => (e) => {
+    var el = document.createElement('textarea');
+    el.value = colorHex;
+    el.setAttribute('readonly', '');
+    el.style = { position: 'absolute', left: '-9999px' }; // can't see meeeeeee
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    this.setState({
+      copied: colorHex,
+    });
+    setTimeout(() => {
+      this.setState({
+        copied: '',
+      });
+    }, 2000);
   };
 
   handleRemoveColor = (colorId) => () => {
@@ -127,10 +166,11 @@ export class PalettePage extends Component {
             type="text"
             name="palette-page-name"
             id="palette-page-name"
+            onChange={this.handleChangeName}
           />
           <button onClick={this.handleRandomize}>Randomize!</button>
           <button onClick={this.handleAddColor}>Add color</button>
-          <button>Upload</button>
+          <button onClick={this.handleUpload}>Upload</button>
         </div>
 
         {this.state.colors.map((color) => (
@@ -145,9 +185,11 @@ export class PalettePage extends Component {
               size="2"
               onChange={this.handleChangeHex(color.id)}
             />
-            <button onClick={this.handleCopyHex(color.colorHex)}>copy</button>
+            <button onClick={this.handleCopyHex(color.colorHex)}>
+              {color.colorHex === this.state.copied ? 'Copied!' : 'Copy'}
+            </button>
             <button onClick={this.handleRemoveColor(color.id)}>
-              remove color
+              Remove color
             </button>
           </div>
         ))}
