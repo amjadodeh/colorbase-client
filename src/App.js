@@ -20,7 +20,7 @@ class App extends Component {
     users: [
       {
         id: demo_account_id,
-        username: 'asdfman',
+        username: 'asdfUser',
         profile_picture:
           'https://images.pexels.com/photos/1887946/pexels-photo-1887946.jpeg',
         client_salt: '$2a$04$RRhLhVs5codgfEkO5kkxmu',
