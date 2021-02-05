@@ -35,7 +35,7 @@ export class Palette extends Component {
   };
 
   render() {
-    const { users = [] } = this.context;
+    const { users = [], signedInAs = {} } = this.context;
     const { palette, userId } = this.props;
     const user = users.find((user) => palette.user_id === user.id);
     const userName = user.username;
@@ -73,7 +73,9 @@ export class Palette extends Component {
               {palette.palette_name} by{' '}
               <Link to={`/user/${palette.user_id}`}>{userName}</Link>
             </span>
-            <span className="palette-span-2">...</span>
+            <span className="palette-span-2">
+              <b className="palette-bold">...</b>
+            </span>
           </div>
         </div>
       </>
@@ -124,12 +126,16 @@ export class Palette extends Component {
               <Link to={`/user/${palette.user_id}`}>{userName}</Link>
             </span>
             <span className="palette-span-2">
-              <img
-                className="palette-delete"
-                src={deleteDark}
-                alt="Delete palette"
-                onClick={this.handleClickDelete(palette.id)}
-              />
+              {signedInAs.user.id === userId ? (
+                <img
+                  className="palette-delete"
+                  src={deleteDark}
+                  alt="Delete palette"
+                  onClick={this.handleClickDelete(palette.id)}
+                />
+              ) : (
+                <b className="palette-bold">...</b>
+              )}
             </span>
           </div>
         </div>
