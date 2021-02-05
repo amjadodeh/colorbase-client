@@ -139,6 +139,9 @@ class App extends Component {
     this.setState({
       users: this.state.users.filter((user) => user.id !== userId),
       signedInAs: { user: false },
+      palettes: this.state.palettes.filter(
+        (palette) => palette.user_id !== userId
+      ),
     });
   };
 

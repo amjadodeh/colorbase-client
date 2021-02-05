@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import bcrypt from 'bcryptjs';
+
+import Context from '../Context';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
-import Context from '../Context';
-
 import PaletteList from '../PaletteList/PaletteList';
 import './UserPage.css';
 
@@ -10,6 +11,8 @@ export class UserPage extends Component {
   static contextType = Context;
 
   state = {
+    deletionStarted: false,
+    deletionPass: '',
     signOutVerify: false,
     changingPicture: false,
     newPicture: '',
@@ -23,6 +26,31 @@ export class UserPage extends Component {
     this.setState({
       changingPicture: !this.state.changingPicture,
     });
+  };
+
+  handleClickDeleteUser = (go) => () => {
+    this.setState({
+      deletionStarted: true,
+    });
+
+    if (go === 'Back') {
+      return this.setState({
+        deletionStarted: false,
+      });
+    } else if (go === 'DELETE ACCOUNT') {
+      bcrypt.compare(
+        this.state.deletionPass,
+        this.context.signedInAs.user.hashedPassword,
+        (err, res) => {
+          if (res) {
+            this.context.handleDeleteUser(this.context.signedInAs.user.id);
+            this.props.history.push(`/`);
+          } else {
+            return alert('Incorrect password');
+          }
+        }
+      );
+    }
   };
 
   handleClickSignOut = (step, yes) => () => {
@@ -48,9 +76,15 @@ export class UserPage extends Component {
     });
   };
 
+  onChangeDeletionPass = (e) => {
+    this.setState({
+      deletionPass: e.target.value,
+    });
+  };
+
   handleSubmit = (e) => {
     if (this.checkURL(this.state.newPicture)) {
-      this.context.handleChangeUserProfilePic();
+      this.context.handleChangeUserProfilePic(this.state.newPicture);
     } else {
       alert('not an image!');
     }
@@ -70,7 +104,6 @@ export class UserPage extends Component {
               alt="Profile"
             />
             <h1>{signedInAs.user.username}</h1>
-
             {this.state.changingPicture ? (
               <div>
                 <label htmlFor="user-page-input">Picture Url</label>
@@ -93,13 +126,46 @@ export class UserPage extends Component {
               </button>
             )}
             <br />
+            <br />
             {this.state.signOutVerify ? (
               <>
+                <p>Signing out already?</p>
                 <button onClick={this.handleClickSignOut(2, false)}>No</button>
                 <button onClick={this.handleClickSignOut(2, true)}>Yes</button>
               </>
             ) : (
               <button onClick={this.handleClickSignOut(1)}>Sign Out</button>
+            )}
+            <br />
+            <br />
+            {!this.state.deletionStarted ? (
+              <button onClick={this.handleClickDeleteUser()}>
+                Delete my account
+              </button>
+            ) : (
+              <>
+                <div>
+                  PLEASE READ CAREFULLY: Deleting an account is permanent. Your
+                  account and all data linked to it will be lost forever. This
+                  CAN NOT be reversed. If you understand and still want to
+                  continue, enter your username below and submit.
+                </div>
+                <p>{signedInAs.user.username}</p>
+                <input
+                  type="password"
+                  id="user-page-account-deletion"
+                  name="user-page-account-deletion"
+                  value={this.state.deletionPass}
+                  onChange={this.onChangeDeletionPass}
+                  required
+                />
+                <button onClick={this.handleClickDeleteUser('DELETE ACCOUNT')}>
+                  DELETE MY ACCOUNT
+                </button>
+                <button onClick={this.handleClickDeleteUser('Back')}>
+                  Back
+                </button>
+              </>
             )}
           </header>
 
