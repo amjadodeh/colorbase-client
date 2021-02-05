@@ -49,7 +49,7 @@ export class Palette extends Component {
             </div>
           </Link>
           <div>
-            {palette.palette_name} by
+            {palette.palette_name} by{' '}
             <Link to={`/user/${palette.user_id}`}>{userName}</Link>
           </div>
         </div>
