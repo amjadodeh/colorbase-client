@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Context from '../Context';
 import { v4 as uuidv4 } from 'uuid';
 
+// import deleteImg from '../images/delete.png';
 import './Palette.css';
 
 export class Palette extends Component {
@@ -52,6 +53,7 @@ export class Palette extends Component {
             {palette.palette_name} by{' '}
             <Link to={`/user/${palette.user_id}`}>{userName}</Link>
           </div>
+          {/* <img src={deleteImg} alt="Delete palette" /> */}
         </div>
       </>
     ) : null;

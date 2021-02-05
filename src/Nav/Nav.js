@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../Context';
 
+import menuBlack from '../images/menu-black.png';
+import logo from '../images/logo.png';
 import './Nav.css';
 
 export class Nav extends Component {
@@ -12,19 +14,14 @@ export class Nav extends Component {
     return (
       <nav className="nav">
         <img
-          src="images/menu-black.png"
+          src={menuBlack}
           width="25"
           height="30"
           alt="Menu"
           className="nav-menu"
         />
         <Link to="/">
-          <img
-            src="images/logo.png"
-            width="125"
-            alt="ColorStop"
-            className="nav-logo"
-          />
+          <img src={logo} width="125" alt="ColorStop" className="nav-logo" />
         </Link>
         {signedInAs.user ? (
           <Link to={`/user/${signedInAs.user.id}`}>
