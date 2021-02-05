@@ -1,7 +1,7 @@
 /* .palette-container * {} */
 
 .palette-container {
-  font-size: 18px;
+  font-size: 16px;
   width: 90%;
   margin: 10px auto 30px auto;
   border: 1px solid #e4e4e4;
@@ -43,7 +43,7 @@
 }
 
 .palette-span-2 {
-  margin: 2px 13px 2px 0;
+  margin: 2px 13px 1px 0;
 }
 
 .palette-span-1 > a {
