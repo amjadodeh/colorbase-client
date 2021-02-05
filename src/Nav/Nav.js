@@ -12,7 +12,7 @@ export class Nav extends Component {
     return (
       <nav className="nav">
         <img
-          src="images/menuBlack.png"
+          src="images/menu-black.png"
           width="25"
           height="30"
           alt="Menu"
