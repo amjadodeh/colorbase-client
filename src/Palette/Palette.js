@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 import Context from '../Context';
 import { v4 as uuidv4 } from 'uuid';
 
-// import deleteImg from '../images/delete.png';
+import deleteImg from '../images/delete.png';
 import './Palette.css';
 
 export class Palette extends Component {
   static contextType = Context;
+
+  handleClickDelete = (paletteId) => (e) => {
+    this.context.handleDeletePalette(paletteId);
+  };
 
   render() {
     const { users = [] } = this.context;
@@ -53,7 +57,12 @@ export class Palette extends Component {
             {palette.palette_name} by{' '}
             <Link to={`/user/${palette.user_id}`}>{userName}</Link>
           </div>
-          {/* <img src={deleteImg} alt="Delete palette" /> */}
+          <img
+            className="palette-delete"
+            src={deleteImg}
+            alt="Delete palette"
+            onClick={this.handleClickDelete(palette.id)}
+          />
         </div>
       </>
     ) : null;

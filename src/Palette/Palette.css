@@ -3,7 +3,7 @@
   width: 90%;
   margin: 0 auto 40px auto;
   background-color: #eee;
-  border-radius: 5%;
+  border-radius: 4%;
 }
 
 .palette-colors {
@@ -16,4 +16,12 @@
   min-height: 200px;
   padding: 6% 0;
   background-color: #bbb;
+}
+
+.palette-delete {
+  position: relative;
+  width: 18px;
+  float: right;
+  bottom: 28px;
+  right: 5px;
 }
