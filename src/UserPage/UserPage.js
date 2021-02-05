@@ -197,7 +197,7 @@ export class UserPage extends Component {
 
             <hr />
 
-            <div>{user.username}'s' Palettes</div>
+            <div>{user.username}'s Palettes</div>
 
             <br />
 
