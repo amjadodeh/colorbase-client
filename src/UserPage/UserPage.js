@@ -86,7 +86,7 @@ export class UserPage extends Component {
   render() {
     const { signedInAs, users, palettes } = this.context;
     const { userId } = this.props.match.params;
-    if (signedInAs.user.id === userId) {
+    if (signedInAs.user.id === Number(userId)) {
       return (
         <div>
           <Nav />
@@ -174,7 +174,7 @@ export class UserPage extends Component {
         </div>
       );
     } else {
-      const user = users.find((user) => user.id === userId);
+      const user = users.find((user) => user.id === Number(userId));
       if (user) {
         return (
           <div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Context from '../Context';
 import { v4 as uuidv4 } from 'uuid';
 
+import { API_BASE_URL } from '../config';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import './SignInPage.css';
@@ -74,12 +75,28 @@ export class SignInPage extends Component {
       const user = users.find((user) => user.username === username);
 
       if (user) {
-        if (password === user.password) {
-          handleSignInUser(user);
-          this.props.history.push(`/user/${user.id}`);
-        } else {
-          return alert('Incorrect password');
-        }
+        fetch(`${API_BASE_URL}/users/signing-in/${user.id}`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({ password }),
+        })
+          .then((res) => {
+            if (!res.ok) return res.json().then((e) => Promise.reject(e));
+            return res.json();
+          })
+          .then((response) => {
+            if (response) {
+              handleSignInUser(user);
+              this.props.history.push(`/user/${user.id}`);
+            } else if (!response) {
+              return alert('Incorrect password');
+            }
+          })
+          .catch((error) => {
+            console.error({ error });
+          });
       } else {
         return alert('User does not exist');
       }
