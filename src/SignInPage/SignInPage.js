@@ -75,7 +75,7 @@ export class SignInPage extends Component {
       const user = users.find((user) => user.username === username);
 
       if (user) {
-        fetch(`${API_BASE_URL}/users/signing-in/${user.id}`, {
+        fetch(`${API_BASE_URL}/users/signingIn/${user.id}`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json',

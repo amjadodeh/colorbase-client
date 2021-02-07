@@ -90,6 +90,10 @@ class App extends Component {
   };
 
   handleChangeUserProfilePic = (newProfilePic) => {
+    this.fetchHelper(`users/${this.state.signedInAs.user.id}`, 'patch', {
+      profile_picture: newProfilePic,
+    });
+
     const newUser = {
       id: this.state.signedInAs.user.id,
       username: this.state.signedInAs.user.username,
