@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Context from '../Context';
-import { v4 as uuidv4 } from 'uuid';
 
 import { API_BASE_URL } from '../config';
 import Nav from '../Nav/Nav';
@@ -70,9 +69,10 @@ export class SignInPage extends Component {
     if (this.validateSignIn()) {
       const username = this.state.signIn.username;
       const password = this.state.signIn.password;
-      const { users = [], handleSignInUser } = this.context;
 
-      const user = users.find((user) => user.username === username);
+      const user = this.context.users.find(
+        (user) => user.username === username
+      );
 
       if (user) {
         fetch(`${API_BASE_URL}/users/signingIn/${user.id}`, {
@@ -88,14 +88,13 @@ export class SignInPage extends Component {
           })
           .then((response) => {
             if (response) {
-              handleSignInUser(user);
+              this.context.handleSignInUser(user);
               this.props.history.push(`/user/${user.id}`);
-            } else if (!response) {
-              return alert('Incorrect password');
             }
           })
           .catch((error) => {
             console.error({ error });
+            return alert('Incorrect password');
           });
       } else {
         return alert('User does not exist');
@@ -110,17 +109,14 @@ export class SignInPage extends Component {
     if (this.validateSignUp()) {
       const username = this.state.signUp.username;
       const password = this.state.signUp.password;
-      const { handleAddNewUser } = this.context;
 
       const newUser = {
-        id: uuidv4(),
-        username: username,
-        profile_picture:
-          'https://images.pexels.com/photos/1887946/pexels-photo-1887946.jpeg',
-        password: password,
+        username,
+        password,
       };
-      handleAddNewUser(newUser);
-      this.props.history.push(`/user/${newUser.id}`);
+
+      this.context.handleAddNewUser(newUser);
+      this.props.history.push(`/`);
     } else {
       return alert('Please resolve any mistakes before continuing');
     }

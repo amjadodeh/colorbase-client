@@ -33,14 +33,6 @@ class App extends Component {
       })
       .then(([users, palettes]) => {
         this.setState({ users, palettes });
-        this.setState({
-          palettes: this.state.palettes.map((palette) => {
-            palette.hex = palette.hex
-              .split(',')
-              .filter((hex) => (hex ? hex : null));
-            return palette;
-          }),
-        });
       })
       .catch((error) => {
         console.error({ error });
@@ -48,24 +40,62 @@ class App extends Component {
   }
 
   fetchHelper(endpoint, method, reqBody) {
-    fetch(`${API_BASE_URL}/${endpoint}`, {
-      method: `${method.toUpperCase()}`,
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(reqBody),
-    })
-      .then((res) => {
-        if (!res.ok) return res.json().then((e) => Promise.reject(e));
-        return res.json();
+    if (reqBody) {
+      fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: `${method.toUpperCase()}`,
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(reqBody),
       })
-      .then((response) => {
-        // return 'success'
-        return response;
+        .then((res) => {
+          if (!res.ok) return res.json().then((e) => Promise.reject(e));
+          return res.json();
+        })
+        .then((response) => {
+          if (method === 'post') {
+            if (endpoint === 'users') {
+              this.setState({
+                users: [...this.state.users, response],
+                signedInAs: { user: response },
+              });
+            } else if (endpoint === 'palettes') {
+              this.setState({
+                palettes: [...this.state.palettes, response],
+              });
+            }
+          }
+
+          return response;
+        })
+        .catch((error) => {
+          console.error({ error });
+        });
+    } else {
+      fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: `${method.toUpperCase()}`,
+        headers: {
+          'content-type': 'application/json',
+        },
       })
-      .catch((error) => {
-        console.error({ error });
-      });
+        .then((res) => {
+          if (!res.ok) return res.json().then((e) => Promise.reject(e));
+          return res.json();
+        })
+        .then((response) => {
+          console.log(response);
+          if (method === 'get') {
+            if (endpoint === 'palettes') {
+              this.setState({ palettes: response });
+            } else if (endpoint === 'users') {
+              this.setState({ users: response });
+            }
+          }
+        })
+        .catch((error) => {
+          console.error({ error });
+        });
+    }
   }
 
   handleSignInUser = (user) => {
@@ -80,42 +110,41 @@ class App extends Component {
     });
   };
 
-  handleAddNewUser = (user) => {
-    this.fetchHelper('users', 'post', user);
-
-    this.setState({
-      users: [...this.state.users, user],
-      signedInAs: { user: user },
-    });
+  handleAddNewUser = (newUser) => {
+    this.fetchHelper('users', 'post', newUser);
   };
 
-  handleChangeUserProfilePic = (newProfilePic) => {
+  handleChangeUserInfo = (username, profile_picture) => {
     this.fetchHelper(`users/${this.state.signedInAs.user.id}`, 'patch', {
-      profile_picture: newProfilePic,
+      ...(username && { username }),
+      ...(profile_picture && { profile_picture }),
     });
 
     const newUser = {
       id: this.state.signedInAs.user.id,
-      username: this.state.signedInAs.user.username,
-      profile_picture: newProfilePic,
+      username: username ? username : this.state.signedInAs.user.username,
+      profile_picture: profile_picture
+        ? profile_picture
+        : this.state.signedInAs.user.profile_picture,
       password: this.state.signedInAs.user.password,
     };
+
+    this.fetchHelper('users', 'get');
 
     this.setState({
       signedInAs: {
         user: newUser,
       },
-      users: [...this.state.users, newUser],
     });
   };
 
   handleUploadPalette = (palette) => {
-    this.setState({
-      palettes: [...this.state.palettes, palette],
-    });
+    this.fetchHelper('palettes', 'post', palette);
   };
 
   handleDeletePalette = (paletteId) => {
+    this.fetchHelper(`palettes/${paletteId}`, 'delete');
+
     this.setState({
       palettes: this.state.palettes.filter(
         (palette) => palette.id !== paletteId
@@ -124,6 +153,8 @@ class App extends Component {
   };
 
   handleDeleteUser = (userId) => {
+    this.fetchHelper(`users/${userId}`, 'delete');
+
     this.setState({
       users: this.state.users.filter((user) => user.id !== userId),
       signedInAs: { user: false },
@@ -141,7 +172,7 @@ class App extends Component {
       handleSignInUser: this.handleSignInUser,
       handleSignOutUser: this.handleSignOutUser,
       handleAddNewUser: this.handleAddNewUser,
-      handleChangeUserProfilePic: this.handleChangeUserProfilePic,
+      handleChangeUserInfo: this.handleChangeUserInfo,
       handleUploadPalette: this.handleUploadPalette,
       handleDeletePalette: this.handleDeletePalette,
       handleDeleteUser: this.handleDeleteUser,

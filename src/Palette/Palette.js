@@ -45,27 +45,30 @@ export class Palette extends Component {
         <div className="palette-container" key={uuidv4()}>
           <Link to={`/palette-maker/${palette.id}`}>
             <div className="palette-colors">
-              {palette.hex.map((hex, i) => (
-                <div
-                  className="palette-color"
-                  key={uuidv4()}
-                  style={
-                    i === 0
-                      ? {
-                          backgroundColor: `${hex}`,
-                          borderRadius: '15px 0px 0px 0px',
-                        }
-                      : palette.hex.length - 1 === i
-                      ? {
-                          backgroundColor: `${hex}`,
-                          borderRadius: '0px 15px 0px 0px',
-                        }
-                      : {
-                          backgroundColor: `${hex}`,
-                        }
-                  }
-                ></div>
-              ))}
+              {palette.hex
+                .split(',')
+                .filter((hex) => (hex ? hex : null))
+                .map((hex, i) => (
+                  <div
+                    className="palette-color"
+                    key={uuidv4()}
+                    style={
+                      i === 0
+                        ? {
+                            backgroundColor: `${hex}`,
+                            borderRadius: '15px 0px 0px 0px',
+                          }
+                        : palette.hex.length - 1 === i
+                        ? {
+                            backgroundColor: `${hex}`,
+                            borderRadius: '0px 15px 0px 0px',
+                          }
+                        : {
+                            backgroundColor: `${hex}`,
+                          }
+                    }
+                  ></div>
+                ))}
             </div>
           </Link>
           <div className="palette-bottom-div">
@@ -79,32 +82,35 @@ export class Palette extends Component {
           </div>
         </div>
       </>
-    ) : userId === palette.user_id ? (
+    ) : Number(userId) === palette.user_id ? (
       <>
         <div className="palette-container" key={uuidv4()}>
           <Link to={`/palette-maker/${palette.id}`}>
             <div className="palette-colors">
-              {palette.hex.map((hex, i) => (
-                <div
-                  className="palette-color"
-                  key={uuidv4()}
-                  style={
-                    i === 0
-                      ? {
-                          backgroundColor: `${hex}`,
-                          borderRadius: '15px 0px 0px 0px',
-                        }
-                      : palette.hex.length - 1 === i
-                      ? {
-                          backgroundColor: `${hex}`,
-                          borderRadius: '0px 15px 0px 0px',
-                        }
-                      : {
-                          backgroundColor: `${hex}`,
-                        }
-                  }
-                >
-                  {/* {palette.hex.length - 1 === i ? (
+              {palette.hex
+                .split(',')
+                .filter((hex) => (hex ? hex : null))
+                .map((hex, i) => (
+                  <div
+                    className="palette-color"
+                    key={uuidv4()}
+                    style={
+                      i === 0
+                        ? {
+                            backgroundColor: `${hex}`,
+                            borderRadius: '15px 0px 0px 0px',
+                          }
+                        : palette.hex.length - 1 === i
+                        ? {
+                            backgroundColor: `${hex}`,
+                            borderRadius: '0px 15px 0px 0px',
+                          }
+                        : {
+                            backgroundColor: `${hex}`,
+                          }
+                    }
+                  >
+                    {/* {palette.hex.length - 1 === i ? (
                     <img
                       className="palette-delete"
                       src={
@@ -116,8 +122,8 @@ export class Palette extends Component {
                       onClick={this.handleClickDelete(palette.id)}
                     />
                   ) : null} */}
-                </div>
-              ))}
+                  </div>
+                ))}
             </div>
           </Link>
           <div className="palette-bottom-div">
@@ -126,7 +132,7 @@ export class Palette extends Component {
               <Link to={`/user/${palette.user_id}`}>{userName}</Link>
             </span>
             <span className="palette-span-2">
-              {signedInAs.user.id === userId ? (
+              {signedInAs.user.id === Number(userId) ? (
                 <img
                   className="palette-delete"
                   src={deleteDark}

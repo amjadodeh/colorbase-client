@@ -22,10 +22,13 @@ export class PalettePage extends Component {
         (palette) => palette.id === Number(paletteId)
       );
       const paletteName = `${palette.palette_name} (Forked)`;
-      const colors = palette.hex.map((hex) => ({
-        id: uuidv4(),
-        colorHex: hex,
-      }));
+      const colors = palette.hex
+        .split(',')
+        .filter((hex) => (hex ? hex : null))
+        .map((hex) => ({
+          id: uuidv4(),
+          colorHex: hex,
+        }));
       this.setState({
         palette_name: paletteName,
         colors: [...colors],
@@ -110,16 +113,16 @@ export class PalettePage extends Component {
 
   handleUpload = () => {
     if (this.context.signedInAs.user) {
-      const hexValues = this.state.colors.map((color) => color.colorHex);
+      const hexValues = [this.state.colors.map((color) => color.colorHex)];
 
       const newPalette = {
-        id: uuidv4(),
         palette_name: this.state.palette_name,
-        hex: hexValues,
+        hex: hexValues.toString(),
         user_id: this.context.signedInAs.user.id,
       };
+
       this.context.handleUploadPalette(newPalette);
-      this.props.history.push(`/user/${newPalette.user_id}`);
+      this.props.history.push(`/user/${this.context.signedInAs.user.id}`);
     } else {
       return alert('Please sign in to upload');
     }

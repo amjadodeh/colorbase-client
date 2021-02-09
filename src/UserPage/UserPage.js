@@ -13,17 +13,30 @@ export class UserPage extends Component {
     deletionStarted: false,
     deletionPass: '',
     signOutVerify: false,
-    changingPicture: false,
+    editProfile: false,
     newPicture: '',
+    newUsername: '',
   };
 
   checkURL(url) {
     return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
   }
 
+  checkUsername(username) {
+    const { users = [] } = this.context;
+
+    if (users.find((user) => user.username === username)) {
+      return alert('Username is taken');
+    } else if (!/^\w+$/.test(username)) {
+      return alert('Invalid characters');
+    }
+
+    return true;
+  }
+
   handleShowInput = () => {
     this.setState({
-      changingPicture: !this.state.changingPicture,
+      editProfile: !this.state.editProfile,
     });
   };
 
@@ -37,11 +50,11 @@ export class UserPage extends Component {
         deletionStarted: false,
       });
     } else if (go === 'DELETE ACCOUNT') {
-      if (this.state.deletionPass === this.context.signedInAs.user.password) {
+      if (this.state.deletionPass === this.context.signedInAs.user.username) {
         this.context.handleDeleteUser(this.context.signedInAs.user.id);
         this.props.history.push(`/`);
       } else {
-        return alert('Incorrect password');
+        return alert('Incorrect username');
       }
     }
   };
@@ -56,6 +69,7 @@ export class UserPage extends Component {
         signOutVerify: false,
       });
       this.context.handleSignOutUser();
+      this.props.history.push(`/`);
     } else {
       this.setState({
         signOutVerify: false,
@@ -69,6 +83,12 @@ export class UserPage extends Component {
     });
   };
 
+  onChangeUsername = (e) => {
+    this.setState({
+      newUsername: e.target.value,
+    });
+  };
+
   onChangeDeletionPass = (e) => {
     this.setState({
       deletionPass: e.target.value,
@@ -76,11 +96,30 @@ export class UserPage extends Component {
   };
 
   handleSubmit = (e) => {
-    if (this.checkURL(this.state.newPicture)) {
-      this.context.handleChangeUserProfilePic(this.state.newPicture);
-    } else {
-      alert('not an image!');
+    if (!this.state.newUsername && !this.state.newPicture) {
+      return alert('Please enter a what you want to change');
     }
+
+    if (this.state.newUsername) {
+      if (!this.checkUsername(this.state.newUsername)) {
+        return alert('Username invalid!');
+      }
+    }
+
+    if (this.state.newPicture) {
+      if (!this.checkURL(this.state.newPicture)) {
+        return alert('not an image!');
+      }
+    }
+
+    this.setState({
+      editProfile: !this.state.editProfile,
+    });
+
+    this.context.handleChangeUserInfo(
+      this.state.newUsername,
+      this.state.newPicture
+    );
   };
 
   render() {
@@ -97,12 +136,21 @@ export class UserPage extends Component {
               alt="Profile"
             />
             <h1>{signedInAs.user.username}</h1>
-            {this.state.changingPicture ? (
+            {this.state.editProfile ? (
               <div>
-                <label htmlFor="user-page-input">Picture Url</label>
+                <label htmlFor="user-page-username">Username</label>
                 <input
                   type="text"
-                  id="user-page-input"
+                  id="user-page-username"
+                  name="username-input"
+                  value={this.state.newUsername}
+                  onChange={this.onChangeUsername}
+                  required
+                />
+                <label htmlFor="user-page-picture-url">Picture Url</label>
+                <input
+                  type="text"
+                  id="user-page-picture-url"
                   name="picture-url-input"
                   value={this.state.newPicture}
                   onChange={this.onChangeUrl}
@@ -114,9 +162,7 @@ export class UserPage extends Component {
                 <button onClick={this.handleSubmit}>Submit</button>
               </div>
             ) : (
-              <button onClick={this.handleShowInput}>
-                Change profile picture?
-              </button>
+              <button onClick={this.handleShowInput}>Edit profile?</button>
             )}
             <br />
             <br />
@@ -145,7 +191,7 @@ export class UserPage extends Component {
                 </div>
                 <p>{signedInAs.user.username}</p>
                 <input
-                  type="password"
+                  type="text"
                   id="user-page-account-deletion"
                   name="user-page-account-deletion"
                   value={this.state.deletionPass}
