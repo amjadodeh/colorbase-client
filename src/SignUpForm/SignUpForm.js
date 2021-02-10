@@ -61,6 +61,7 @@ export class SignInPage extends Component {
       };
 
       this.context.handleAddNewUser(newUser);
+      this.context.handleShowSignIn();
     } else {
       return alert('Please resolve any mistakes before continuing');
     }
@@ -69,59 +70,57 @@ export class SignInPage extends Component {
   render() {
     return (
       <>
-        <section className="signup-section">
-          <h2>Sign up today!</h2>
+        <h2>Sign Up</h2>
 
-          <form className="signup-form">
-            <div className="signup-form-username-div">
-              <input
-                className="signup-form-username-input"
-                value={this.state.signUp.username}
-                onChange={this.handleChangeSignUp}
-                placeholder="Username"
-                type="text"
-                name="username"
-                id="username"
-              />
-            </div>
-            <div className="signup-form-password-div">
-              <input
-                className="signup-form-password-input"
-                value={this.state.signUp.password}
-                onChange={this.handleChangeSignUp}
-                placeholder="Password"
-                type={this.state.showPassword ? 'text' : 'password'}
-                name="password"
-                id="password"
-              />
-            </div>
-            <div className="signup-form-password-div">
-              <input
-                className="signup-form-password-input"
-                value={this.state.signUp.repeatPassword}
-                onChange={this.handleChangeSignUp}
-                placeholder="Repeat Password"
-                type="password"
-                name="repeatPassword"
-                id="repeatPassword"
-              />
-              <button
-                className="signup-form-password-show-button"
-                style={{ left: this.state.showPassword ? '120px' : '118px' }}
-                onClick={this.handleShowPassword}
-              >
-                {this.state.showPassword ? 'Hide' : 'Show'}
-              </button>
-            </div>
+        <form className="signup-form">
+          <div className="signup-form-username-div">
+            <input
+              className="signup-form-username-input"
+              value={this.state.signUp.username}
+              onChange={this.handleChangeSignUp}
+              placeholder="Username"
+              type="text"
+              name="username"
+              id="username"
+            />
+          </div>
+          <div className="signup-form-password-div">
+            <input
+              className="signup-form-password-input"
+              value={this.state.signUp.password}
+              onChange={this.handleChangeSignUp}
+              placeholder="Password"
+              type={this.state.showPassword ? 'text' : 'password'}
+              name="password"
+              id="password"
+            />
+          </div>
+          <div className="signup-form-password-div">
+            <input
+              className="signup-form-password-input"
+              value={this.state.signUp.repeatPassword}
+              onChange={this.handleChangeSignUp}
+              placeholder="Repeat Password"
+              type="password"
+              name="repeatPassword"
+              id="repeatPassword"
+            />
             <button
-              className="signup-form-submit-button"
-              onClick={this.handleClickSignUp}
-              type="submit"
+              className="signup-form-password-show-button"
+              style={{ left: this.state.showPassword ? '120px' : '118px' }}
+              onClick={this.handleShowPassword}
             >
-              Sign Up
+              {this.state.showPassword ? 'Hide' : 'Show'}
             </button>
-          </form>
-        </section>
+          </div>
+          <button
+            className="signup-form-submit-button"
+            onClick={this.handleClickSignUp}
+            type="submit"
+          >
+            Sign Up
+          </button>
+        </form>
       </>
     );
   }

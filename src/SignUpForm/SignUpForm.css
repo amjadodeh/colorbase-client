@@ -1,11 +1,3 @@
-.signup-section {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-}
-
 .signup-form-username-input,
 .signup-form-password-input {
   text-align: left;

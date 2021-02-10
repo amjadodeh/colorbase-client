@@ -4,8 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Context from './Context';
 import { API_BASE_URL } from './config';
 import LandingPage from './LandingPage/LandingPage';
-import SignInForm from './SignInForm/SignInForm';
-// import SignUpForm from './SignUpForm/SignUpForm';
+import SignInOverlay from './SignInOverlay/SignInOverlay';
 import PalettePage from './PalettePage/PalettePage';
 import BrowsePalettesPage from './BrowsePalettesPage/BrowsePalettesPage';
 import UserPage from './UserPage/UserPage';
@@ -207,7 +206,7 @@ class App extends Component {
             <Route path="/user/:userId" component={UserPage} />
             <Route path="/" component={LandingPage} />
           </Switch>
-          {this.state.showSignIn ? <SignInForm /> : null}
+          {this.state.showSignIn ? <SignInOverlay /> : null}
         </main>
       </Context.Provider>
     );

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Context from '../Context';
 
-import xImg from '../images/X.png';
 import { API_BASE_URL } from '../config';
 import './SignInForm.css';
 
@@ -79,70 +78,51 @@ export class SignInPage extends Component {
     }
   };
 
-  handleExitClick = (e) => {
-    this.context.handleShowSignIn();
-  };
-
   render() {
-    if (this.context.showSignIn) {
-      return (
-        <div className="signin-overlay">
-          <section className="signin-section">
-            <div className="signin-form-x-div">
-              <img
-                src={xImg}
-                alt="Menu"
-                className="signin-form-x"
-                onClick={this.handleExitClick}
-              />
-            </div>
+    return (
+      <>
+        <h2>Sign In</h2>
 
-            <h2>Sign In</h2>
-
-            <form className="signin-form">
-              <div className="signin-form-username-div">
-                <input
-                  className="signin-form-username-input"
-                  value={this.state.signIn.username}
-                  onChange={this.handleChangeSignIn}
-                  placeholder="Username"
-                  type="text"
-                  name="username"
-                  id="username"
-                />
-              </div>
-              <div className="signin-form-password-div">
-                <input
-                  className="signin-form-password-input"
-                  value={this.state.signIn.password}
-                  onChange={this.handleChangeSignIn}
-                  placeholder="Password"
-                  type={this.state.showPassword ? 'text' : 'password'}
-                  name="password"
-                  id="password"
-                />
-                <button
-                  className="signin-form-password-show-button"
-                  style={{ left: this.state.showPassword ? '120px' : '118px' }}
-                  onClick={this.handleShowPassword}
-                >
-                  {this.state.showPassword ? 'Hide' : 'Show'}
-                </button>
-              </div>
-              <button
-                className="signin-form-submit-button"
-                onClick={this.handleClickSignIn}
-                type="submit"
-              >
-                Sign In
-              </button>
-            </form>
-          </section>
-        </div>
-      );
-    } else {
-      return <></>;
-    }
+        <form className="signin-form">
+          <div className="signin-form-username-div">
+            <input
+              className="signin-form-username-input"
+              value={this.state.signIn.username}
+              onChange={this.handleChangeSignIn}
+              placeholder="Username"
+              type="text"
+              name="username"
+              id="username"
+            />
+          </div>
+          <div className="signin-form-password-div">
+            <input
+              className="signin-form-password-input"
+              value={this.state.signIn.password}
+              onChange={this.handleChangeSignIn}
+              placeholder="Password"
+              type={this.state.showPassword ? 'text' : 'password'}
+              name="password"
+              id="password"
+            />
+            <button
+              className="signin-form-password-show-button"
+              style={{ left: this.state.showPassword ? '120px' : '118px' }}
+              onClick={this.handleShowPassword}
+            >
+              {this.state.showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
+          <button
+            className="signin-form-submit-button"
+            onClick={this.handleClickSignIn}
+            type="submit"
+          >
+            Sign In
+          </button>
+        </form>
+      </>
+    );
   }
 }
 
