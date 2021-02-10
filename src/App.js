@@ -15,6 +15,7 @@ class App extends Component {
     signedInAs: {
       user: false,
     },
+    showSignIn: true,
     users: [],
     palettes: [],
   };
@@ -167,6 +168,7 @@ class App extends Component {
   render() {
     const value = {
       signedInAs: this.state.signedInAs,
+      showSignIn: this.state.showSignIn,
       users: [...this.state.users],
       palettes: [...this.state.palettes],
       handleSignInUser: this.handleSignInUser,
