@@ -13,6 +13,8 @@ export class SignInPage extends Component {
       repeatPassword: '',
     },
     showPassword: false,
+    usernameError: '',
+    passwordError: '',
   };
 
   validateSignUp = () => {
@@ -20,17 +22,25 @@ export class SignInPage extends Component {
     const { users = [] } = this.context;
 
     if (!username || !password || !repeatPassword) {
-      return alert('Please enter missing values');
+      return this.setState({
+        usernameError: 'Please enter any missing values',
+      });
     }
 
     if (users.find((user) => user.username === username)) {
-      return alert('Username is taken');
+      return this.setState({
+        usernameError: 'Username is taken',
+      });
     } else if (!/^\w+$/.test(username)) {
-      return alert('Invalid characters');
+      return this.setState({
+        usernameError: 'Invalid characters',
+      });
     }
 
     if (password !== repeatPassword) {
-      return alert('Passwords do not match');
+      return this.setState({
+        usernameError: 'Passwords do not match',
+      });
     }
 
     return true;
@@ -62,8 +72,6 @@ export class SignInPage extends Component {
 
       this.context.handleAddNewUser(newUser);
       this.context.handleShowSignIn();
-    } else {
-      return alert('Please resolve any mistakes before continuing');
     }
   };
 
@@ -112,6 +120,8 @@ export class SignInPage extends Component {
               {this.state.showPassword ? 'Hide' : 'Show'}
             </button>
           </div>
+          <span className="signup-form-error">{this.state.usernameError}</span>
+          <span className="signup-form-error">{this.state.passwordError}</span>
           <button
             className="signup-form-submit-button"
             onClick={this.handleClickSignUp}

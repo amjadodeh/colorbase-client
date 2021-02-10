@@ -13,6 +13,8 @@ export class SignInPage extends Component {
       password: '',
     },
     showPassword: false,
+    usernameError: '',
+    passwordError: '',
   };
 
   validateSignIn = () => {
@@ -20,8 +22,11 @@ export class SignInPage extends Component {
     // const { users = [] } = this.context;
 
     if (!username || !password) {
-      return alert('Please enter missing values');
+      return this.setState({
+        usernameError: 'Please enter your username and password',
+      });
     }
+
     return true;
   };
 
@@ -68,13 +73,15 @@ export class SignInPage extends Component {
           })
           .catch((error) => {
             console.error({ error });
-            return alert('Incorrect password');
+            this.setState({
+              usernameError: 'Incorrect password',
+            });
           });
       } else {
-        return alert('User does not exist');
+        this.setState({
+          usernameError: 'This user does not exist',
+        });
       }
-    } else {
-      return alert('Please resolve any mistakes before continuing');
     }
   };
 
@@ -112,6 +119,8 @@ export class SignInPage extends Component {
               {this.state.showPassword ? 'Hide' : 'Show'}
             </button>
           </div>
+          <span className="signin-form-error">{this.state.usernameError}</span>
+          <span className="signin-form-error">{this.state.passwordError}</span>
           <button
             className="signin-form-submit-button"
             onClick={this.handleClickSignIn}
