@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Context from '../Context';
 
+import xImg from '../images/X.png';
 import { API_BASE_URL } from '../config';
 import './SignInForm.css';
 
@@ -63,6 +64,7 @@ export class SignInPage extends Component {
           .then((response) => {
             if (response) {
               this.context.handleSignInUser(user);
+              this.context.handleShowSignIn();
             }
           })
           .catch((error) => {
@@ -77,11 +79,24 @@ export class SignInPage extends Component {
     }
   };
 
+  handleExitClick = (e) => {
+    this.context.handleShowSignIn();
+  };
+
   render() {
     if (this.context.showSignIn) {
       return (
-        <>
+        <div className="signin-overlay">
           <section className="signin-section">
+            <div className="signin-form-x-div">
+              <img
+                src={xImg}
+                alt="Menu"
+                className="signin-form-x"
+                onClick={this.handleExitClick}
+              />
+            </div>
+
             <h2>Sign In</h2>
 
             <form className="signin-form">
@@ -108,7 +123,7 @@ export class SignInPage extends Component {
                 />
                 <button
                   className="signin-form-password-show-button"
-                  style={{ left: this.state.showPassword ? '124px' : '121px' }}
+                  style={{ left: this.state.showPassword ? '120px' : '118px' }}
                   onClick={this.handleShowPassword}
                 >
                   {this.state.showPassword ? 'Hide' : 'Show'}
@@ -123,7 +138,7 @@ export class SignInPage extends Component {
               </button>
             </form>
           </section>
-        </>
+        </div>
       );
     } else {
       return <></>;

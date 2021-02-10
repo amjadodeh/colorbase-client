@@ -4,7 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 import Context from './Context';
 import { API_BASE_URL } from './config';
 import LandingPage from './LandingPage/LandingPage';
-import SignInPage from './SignInPage/SignInPage';
+import SignInForm from './SignInForm/SignInForm';
+// import SignUpForm from './SignUpForm/SignUpForm';
 import PalettePage from './PalettePage/PalettePage';
 import BrowsePalettesPage from './BrowsePalettesPage/BrowsePalettesPage';
 import UserPage from './UserPage/UserPage';
@@ -15,7 +16,8 @@ class App extends Component {
     signedInAs: {
       user: false,
     },
-    showSignIn: true,
+    showMenu: false,
+    showSignIn: false,
     users: [],
     palettes: [],
   };
@@ -165,9 +167,22 @@ class App extends Component {
     });
   };
 
+  handleShowMenu = () => {
+    this.setState({
+      showMenu: !this.state.showMenu,
+    });
+  };
+
+  handleShowSignIn = () => {
+    this.setState({
+      showSignIn: !this.state.showSignIn,
+    });
+  };
+
   render() {
     const value = {
       signedInAs: this.state.signedInAs,
+      showMenu: this.state.showMenu,
       showSignIn: this.state.showSignIn,
       users: [...this.state.users],
       palettes: [...this.state.palettes],
@@ -178,18 +193,21 @@ class App extends Component {
       handleUploadPalette: this.handleUploadPalette,
       handleDeletePalette: this.handleDeletePalette,
       handleDeleteUser: this.handleDeleteUser,
+      handleShowMenu: this.handleShowMenu,
+      handleShowSignIn: this.handleShowSignIn,
     };
     return (
       <Context.Provider value={value}>
         <main className="App">
           <Switch>
-            <Route path="/sign-in" component={SignInPage} />
+            {/* <Route path="/sign-in" component={SignInPage} /> */}
             <Route path="/palette-maker" exact component={PalettePage} />
             <Route path="/palette-maker/:paletteId" component={PalettePage} />
             <Route path="/browse-palettes" component={BrowsePalettesPage} />
             <Route path="/user/:userId" component={UserPage} />
             <Route path="/" component={LandingPage} />
           </Switch>
+          {this.state.showSignIn ? <SignInForm /> : null}
         </main>
       </Context.Provider>
     );

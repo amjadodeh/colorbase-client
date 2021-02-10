@@ -9,14 +9,9 @@ import './Nav.css';
 export class Nav extends Component {
   static contextType = Context;
 
-  state = {
-    showMenu: false,
-  };
-
   handleMenuClick = (e) => {
-    this.setState({
-      showMenu: !this.state.showMenu,
-    });
+    e.preventDefault();
+    this.context.handleShowMenu();
   };
 
   render() {
@@ -30,9 +25,8 @@ export class Nav extends Component {
           className="nav-menu-button"
           onClick={this.handleMenuClick}
         />
-        {this.state.showMenu ? (
-          <div className="nav-menu">
-            {/* {setTimeout(this.handleMenuClick, 3000)} */}
+        {this.context.showMenu ? (
+          <div className="nav-menu" onClick={this.handleMenuClick}>
             <ul>
               <Link to="/">
                 <li>Home</li>
@@ -54,9 +48,9 @@ export class Nav extends Component {
                   </Link>
                 </>
               ) : (
-                <Link to="/sign-in">
+                <a href="true" onClick={this.context.handleShowSignIn}>
                   <li>Sign In</li>
-                </Link>
+                </a>
               )}
               <hr />
               <Link to="/learn-about-colors">
@@ -77,9 +71,12 @@ export class Nav extends Component {
             />
           </Link>
         ) : (
-          <Link to="/sign-in">
-            <button className="nav-signin">Sign In</button>
-          </Link>
+          <button
+            onClick={this.context.handleShowSignIn}
+            className="nav-signin"
+          >
+            Sign In
+          </button>
         )}
       </nav>
     );
