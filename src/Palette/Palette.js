@@ -3,32 +3,12 @@ import { Link } from 'react-router-dom';
 import Context from '../Context';
 import { v4 as uuidv4 } from 'uuid';
 
-import deleteDark from '../images/delete-dark.png';
+import deleteBlack from '../images/delete-black.png';
 // import deleteLight from '../images/delete-light.png';
 import './Palette.css';
 
 export class Palette extends Component {
   static contextType = Context;
-
-  lightOrDark(color) {
-    // ^ this will be needed later...
-
-    var r, g, b, hsp;
-
-    color = +('0x' + color.slice(1).replace(color.length < 5 && /./g, '$&$&'));
-
-    r = color >> 16;
-    g = (color >> 8) & 255;
-    b = color & 255;
-
-    hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
-
-    if (hsp > 127.5) {
-      return 'light';
-    } else {
-      return 'dark';
-    }
-  }
 
   handleClickDelete = (paletteId) => (e) => {
     this.context.handleDeletePalette(paletteId);
@@ -109,20 +89,7 @@ export class Palette extends Component {
                             backgroundColor: `${hex}`,
                           }
                     }
-                  >
-                    {/* {palette.hex.length - 1 === i ? (
-                    <img
-                      className="palette-delete"
-                      src={
-                        this.lightOrDark(hex) === 'light'    // ...for stuff like this
-                          ? deleteDark
-                          : deleteLight
-                      }
-                      alt="Delete palette"
-                      onClick={this.handleClickDelete(palette.id)}
-                    />
-                  ) : null} */}
-                  </div>
+                  ></div>
                 ))}
             </div>
           </Link>
@@ -135,7 +102,7 @@ export class Palette extends Component {
               {signedInAs.user.id === Number(userId) ? (
                 <img
                   className="palette-delete"
-                  src={deleteDark}
+                  src={deleteBlack}
                   alt="Delete palette"
                   onClick={this.handleClickDelete(palette.id)}
                 />

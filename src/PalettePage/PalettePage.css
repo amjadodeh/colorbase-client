@@ -6,11 +6,72 @@
 
 .palette-maker-color {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   flex: 1;
 }
 
 .palette-maker-color > * {
   height: 5vh;
+}
+
+.palette-maker-color-hex {
+  background: transparent;
+  border: none;
+  margin-left: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+.palette-maker-color-options {
+  margin-right: 10px;
+}
+
+.palette-maker-copy-color {
+  margin: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+.palette-maker-delete-color {
+  margin: 10px;
+  height: 20px;
+  width: 18px;
+}
+
+.palette-maker-lock-color {
+  margin: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+.palette-maker-copied-message {
+  background-color: #d2fbd0;
+  color: #50854e;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 15px;
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.palette-maker-palette-options {
+  height: 56px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.palette-maker-palette-options > button {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 8px 12px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
 }

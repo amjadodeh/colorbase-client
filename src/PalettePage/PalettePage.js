@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import Context from '../Context';
 import { v4 as uuidv4 } from 'uuid';
 
+import copyBlack from '../images/copy-black.png';
+import copyWhite from '../images/copy-white.png';
+import deleteBlack from '../images/delete-black.png';
+import deleteWhite from '../images/delete-white.png';
+import lockBlack from '../images/padlock-black.png';
+import lockWhite from '../images/padlock-white.png';
+import lockOpenBlack from '../images/padlock-open-black.png';
+import lockOpenWhite from '../images/padlock-open-white.png';
 import Nav from '../Nav/Nav';
 import './PalettePage.css';
 
@@ -10,7 +18,7 @@ export class PalettePage extends Component {
 
   state = {
     palette_name: 'My New Palette',
-    copied: 'Copy',
+    copied: '',
     colors: [],
   };
 
@@ -27,6 +35,7 @@ export class PalettePage extends Component {
         .filter((hex) => (hex ? hex : null))
         .map((hex) => ({
           id: uuidv4(),
+          locked: false,
           colorHex: hex,
         }));
       this.setState({
@@ -38,24 +47,28 @@ export class PalettePage extends Component {
         colors: [
           {
             id: uuidv4(),
+            locked: false,
             colorHex:
               '#' +
               ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0'),
           },
           {
             id: uuidv4(),
+            locked: false,
             colorHex:
               '#' +
               ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0'),
           },
           {
             id: uuidv4(),
+            locked: false,
             colorHex:
               '#' +
               ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0'),
           },
           {
             id: uuidv4(),
+            locked: false,
             colorHex:
               '#' +
               ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0'),
@@ -74,6 +87,7 @@ export class PalettePage extends Component {
   handleChangeHex = (colorId) => (e) => {
     const changedColors = this.state.colors.map((color) => ({
       id: color.id,
+      locked: color.locked,
       colorHex: color.id === colorId ? e.target.value : color.colorHex,
     }));
 
@@ -85,8 +99,10 @@ export class PalettePage extends Component {
   handleRandomize = () => {
     const randomizedColors = this.state.colors.map((color) => ({
       id: color.id,
-      colorHex:
-        '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0'),
+      locked: color.locked,
+      colorHex: color.locked
+        ? color.colorHex
+        : '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0'),
     }));
 
     this.setState({
@@ -102,6 +118,7 @@ export class PalettePage extends Component {
         '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0');
       const newColor = {
         id: uuidv4(),
+        locked: false,
         colorHex: newHex,
       };
 
@@ -157,24 +174,49 @@ export class PalettePage extends Component {
     }
   };
 
+  handleLockColor = (colorId) => () => {
+    const changedColors = this.state.colors.map((color) => ({
+      id: color.id,
+      locked: color.id === colorId ? !color.locked : color.locked,
+      colorHex: color.colorHex,
+    }));
+
+    this.setState({
+      colors: changedColors,
+    });
+  };
+
+  lightOrDark(color) {
+    var r, g, b, hsp;
+
+    color = +('0x' + color.slice(1).replace(color.length < 5 && /./g, '$&$&'));
+
+    r = color >> 16;
+    g = (color >> 8) & 255;
+    b = color & 255;
+
+    hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+
+    if (hsp > 127.5) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   render() {
     return (
       <div className="palette-maker">
         <Nav />
-        <div>
-          <label htmlFor="palette-page-name">Palette Name</label>
-          <input
-            value={this.state.palette_name}
-            placeholder="Enter palette name here"
-            type="text"
-            name="palette-page-name"
-            id="palette-page-name"
-            onChange={this.handleChangeName}
-          />
-          <button onClick={this.handleRandomize}>Randomize!</button>
-          <button onClick={this.handleAddColor}>Add color</button>
-          <button onClick={this.handleUpload}>Upload</button>
-        </div>
+        {/* <label htmlFor="palette-page-name">Palette Name</label>
+        <input
+          value={this.state.palette_name}
+          placeholder="Enter palette name here"
+          type="text"
+          name="palette-page-name"
+          id="palette-page-name"
+          onChange={this.handleChangeName}
+        /> */}
 
         {this.state.colors.map((color) => (
           <div
@@ -183,19 +225,60 @@ export class PalettePage extends Component {
             style={{ backgroundColor: color.colorHex }}
           >
             <input
+              className="palette-maker-color-hex"
               value={color.colorHex}
+              style={{
+                color: this.lightOrDark(color.colorHex) ? '#000' : '#fff',
+              }}
               maxLength="7"
               size="2"
               onChange={this.handleChangeHex(color.id)}
             />
-            <button onClick={this.handleCopyHex(color.colorHex)}>
-              {color.colorHex === this.state.copied ? 'Copied!' : 'Copy'}
-            </button>
-            <button onClick={this.handleRemoveColor(color.id)}>
-              Remove color
-            </button>
+            <span className="palette-maker-color-options">
+              <img
+                className="palette-maker-copy-color"
+                src={this.lightOrDark(color.colorHex) ? copyBlack : copyWhite}
+                alt="Copy color"
+                onClick={this.handleCopyHex(color.colorHex)}
+              />
+
+              {color.colorHex === this.state.copied ? (
+                <div className="palette-maker-copied-message">
+                  Color copied to clipboard!
+                </div>
+              ) : null}
+
+              <img
+                className="palette-maker-delete-color"
+                src={
+                  this.lightOrDark(color.colorHex) ? deleteBlack : deleteWhite
+                }
+                alt="Delete color"
+                onClick={this.handleRemoveColor(color.id)}
+              />
+
+              <img
+                className="palette-maker-lock-color"
+                src={
+                  this.lightOrDark(color.colorHex)
+                    ? color.locked
+                      ? lockBlack
+                      : lockOpenBlack
+                    : color.locked
+                    ? lockWhite
+                    : lockOpenWhite
+                }
+                alt="Delete color"
+                onClick={this.handleLockColor(color.id)}
+              />
+            </span>
           </div>
         ))}
+        <div className="palette-maker-palette-options">
+          <button onClick={this.handleRandomize}>Randomize!</button>
+          <button onClick={this.handleAddColor}>Add color</button>
+          <button onClick={this.handleUpload}>Upload</button>
+        </div>
       </div>
     );
   }
