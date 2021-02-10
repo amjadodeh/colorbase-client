@@ -10,6 +10,7 @@ import lockBlack from '../images/padlock-black.png';
 import lockWhite from '../images/padlock-white.png';
 import lockOpenBlack from '../images/padlock-open-black.png';
 import lockOpenWhite from '../images/padlock-open-white.png';
+import xImg from '../images/X.png';
 import Nav from '../Nav/Nav';
 import './PalettePage.css';
 
@@ -17,7 +18,8 @@ export class PalettePage extends Component {
   static contextType = Context;
 
   state = {
-    palette_name: 'My New Palette',
+    showPaletteName: false,
+    palette_name: '',
     copied: '',
     colors: [],
   };
@@ -141,7 +143,7 @@ export class PalettePage extends Component {
       this.context.handleUploadPalette(newPalette);
       this.props.history.push(`/user/${this.context.signedInAs.user.id}`);
     } else {
-      return alert('Please sign in to upload');
+      this.context.handleShowSignIn();
     }
   };
 
@@ -204,20 +206,20 @@ export class PalettePage extends Component {
     }
   }
 
+  handleShowPaletteName = () => {
+    if (this.context.signedInAs.user) {
+      this.setState({
+        showPaletteName: !this.state.showPaletteName,
+      });
+    } else {
+      this.context.handleShowSignIn();
+    }
+  };
+
   render() {
     return (
       <div className="palette-maker">
         <Nav />
-        {/* <label htmlFor="palette-page-name">Palette Name</label>
-        <input
-          value={this.state.palette_name}
-          placeholder="Enter palette name here"
-          type="text"
-          name="palette-page-name"
-          id="palette-page-name"
-          onChange={this.handleChangeName}
-        /> */}
-
         {this.state.colors.map((color) => (
           <div
             className="palette-maker-color"
@@ -277,8 +279,39 @@ export class PalettePage extends Component {
         <div className="palette-maker-palette-options">
           <button onClick={this.handleRandomize}>Randomize!</button>
           <button onClick={this.handleAddColor}>Add color</button>
-          <button onClick={this.handleUpload}>Upload</button>
+          <button onClick={this.handleShowPaletteName}>Upload</button>
         </div>
+
+        {this.state.showPaletteName ? (
+          <>
+            <div className="palette-maker-palette-name-overlay">
+              <section className="palette-maker-palette-name-input-section">
+                <div className="palette-maker-x-div">
+                  <img
+                    src={xImg}
+                    alt="Exit"
+                    className="palette-maker-x"
+                    onClick={this.handleShowPaletteName}
+                  />
+                </div>
+                <input
+                  className="palette-maker-palette-name-input"
+                  value={this.state.palette_name}
+                  placeholder="Palette name"
+                  type="text"
+                  name="palette-maker-palette-name"
+                  onChange={this.handleChangeName}
+                />
+                <button
+                  className="palette-maker-palette-name-upload-button"
+                  onClick={this.handleUpload}
+                >
+                  Upload now!
+                </button>
+              </section>
+            </div>
+          </>
+        ) : null}
       </div>
     );
   }
