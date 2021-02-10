@@ -233,7 +233,7 @@ export class PalettePage extends Component {
                 color: this.lightOrDark(color.colorHex) ? '#000' : '#fff',
               }}
               maxLength="7"
-              size="2"
+              size="5"
               onChange={this.handleChangeHex(color.id)}
             />
             <span className="palette-maker-color-options">
