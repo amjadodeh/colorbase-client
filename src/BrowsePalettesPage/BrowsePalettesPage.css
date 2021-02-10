@@ -1,0 +1,13 @@
+.browse-palettes-header {
+  width: 90%;
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0 auto;
+}
+
+.browse-palettes-header h4 {
+  font-weight: normal;
+  color: #7d7c83;
+  font-size: 18px;
+  margin-bottom: 45px;
+}

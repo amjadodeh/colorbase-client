@@ -4,6 +4,7 @@ import Context from '../Context';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import PaletteList from '../PaletteList/PaletteList';
+import './BrowsePalettesPage.css';
 
 export class BrowsePalettesPage extends Component {
   static contextType = Context;
@@ -13,8 +14,8 @@ export class BrowsePalettesPage extends Component {
     return (
       <div>
         <Nav />
-        <header role="banner">
-          <h1>Explore Popular Palettes</h1>
+        <header className="browse-palettes-header">
+          <h1>Popular palettes</h1>
           <h4>
             Get inspired by popular color palettes created by other users!
           </h4>
