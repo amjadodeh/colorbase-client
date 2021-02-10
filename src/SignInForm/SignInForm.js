@@ -107,7 +107,6 @@ export class SignInPage extends Component {
             />
             <button
               className="signin-form-password-show-button"
-              style={{ left: this.state.showPassword ? '120px' : '118px' }}
               onClick={this.handleShowPassword}
             >
               {this.state.showPassword ? 'Hide' : 'Show'}
