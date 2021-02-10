@@ -58,7 +58,7 @@ export class Nav extends Component {
               )}
               <hr />
               <Link to="/learn-about-colors">
-                <li>Learn About Colors</li>
+                <li>Learn About Colors (soon)</li>
               </Link>
             </ul>
           </div>

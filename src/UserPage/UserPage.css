@@ -2,7 +2,15 @@
   margin-top: 45px;
   object-fit: cover;
   object-position: center;
-  height: 180px;
-  width: 180px;
+  height: 170px;
+  width: 170px;
   border-radius: 50%;
+}
+
+.user-page-edit-profile {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 20px;
+  top: 70px;
 }

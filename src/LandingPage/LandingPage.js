@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import './LandingPage.css';
 
 export class LandingPage extends Component {
@@ -28,7 +28,7 @@ export class LandingPage extends Component {
             </Link>
           </header>
 
-          <section className="landing-section">
+          {/* <section className="landing-section">
             <header>
               <h3>The Perfect Colors</h3>
             </header>
@@ -70,9 +70,9 @@ export class LandingPage extends Component {
               ColorStop has a huge collection of color palettes that are well
               organized and ready to be used by you!
             </p>
-          </section>
+          </section> */}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }
