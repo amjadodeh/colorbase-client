@@ -10,19 +10,21 @@ export class LandingPage extends Component {
     return (
       <>
         <Nav />
-        <div>
-          <header>
-            <h1>Find your perfect color scheme today!</h1>
-            <h3>
+        <div className="landing-div">
+          <header className="landing-header">
+            <h1>Find the perfect color palette for you!</h1>
+            <h4>
               Create the perfect color scheme for your project or get inspired
               by popular color palettes created by other users!
-            </h3>
+            </h4>
             <Link to="/palette-maker">
-              <button>Start creating!</button>
+              <button className="landing-button-1">Start creating!</button>
             </Link>
             <br />
             <Link to="/browse-palettes">
-              <button>Browse popular palettes</button>
+              <button className="landing-button-2">
+                Explore popular palettes
+              </button>
             </Link>
           </header>
 
@@ -69,8 +71,8 @@ export class LandingPage extends Component {
               organized and ready to be used by you!
             </p>
           </section>
-          <Footer />
         </div>
+        <Footer />
       </>
     );
   }
