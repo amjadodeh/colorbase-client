@@ -3,14 +3,25 @@ import { Link } from 'react-router-dom';
 import Context from '../Context';
 import { v4 as uuidv4 } from 'uuid';
 
-import deleteBlack from '../images/delete-black.png';
-// import deleteLight from '../images/delete-light.png';
+import upImg from '../images/up.png';
+import downImg from '../images/down.png';
 import './Palette.css';
 
 export class Palette extends Component {
   static contextType = Context;
 
+  state = {
+    expanded: false,
+  };
+
+  handleClickExpand = () => {
+    this.setState({
+      expanded: !this.state.expanded,
+    });
+  };
+
   handleClickDelete = (paletteId) => (e) => {
+    e.preventDefault();
     this.context.handleDeletePalette(paletteId);
   };
 
@@ -53,11 +64,29 @@ export class Palette extends Component {
           </Link>
           <div className="palette-bottom-div">
             <span className="palette-span-1">
-              {palette.palette_name} by{' '}
-              <Link to={`/user/${palette.user_id}`}>{userName}</Link>
+              {palette.palette_name}
+              <br />
+              {this.state.expanded ? (
+                <>
+                  by <Link to={`/user/${palette.user_id}`}>{userName}</Link>
+                </>
+              ) : null}
             </span>
-            <span className="palette-span-2">
-              <b className="palette-bold">...</b>
+            <span className="palette-span-2" onClick={this.handleClickExpand}>
+              {this.state.expanded ? (
+                <img
+                  className="palette-expand-button"
+                  src={downImg}
+                  alt="Expand palette info"
+                />
+              ) : (
+                <img
+                  className="palette-expand-button"
+                  src={upImg}
+                  alt="Expand palette info"
+                  onClick={this.handleClickExpand}
+                />
+              )}
             </span>
           </div>
         </div>
@@ -95,19 +124,39 @@ export class Palette extends Component {
           </Link>
           <div className="palette-bottom-div">
             <span className="palette-span-1">
-              {palette.palette_name} by{' '}
-              <Link to={`/user/${palette.user_id}`}>{userName}</Link>
+              {palette.palette_name}
+              <br />
+              {this.state.expanded ? (
+                <>
+                  by <Link to={`/user/${palette.user_id}`}>{userName}</Link>
+                  {signedInAs.user.id === Number(userId) ? (
+                    <>
+                      <br />
+                      <span
+                        className="palette-delete-span"
+                        onClick={this.handleClickDelete(palette.id)}
+                      >
+                        <a href="true">Delete palette</a>
+                      </span>
+                    </>
+                  ) : null}
+                </>
+              ) : null}
             </span>
-            <span className="palette-span-2">
-              {signedInAs.user.id === Number(userId) ? (
+            <span className="palette-span-2" onClick={this.handleClickExpand}>
+              {this.state.expanded ? (
                 <img
-                  className="palette-delete"
-                  src={deleteBlack}
-                  alt="Delete palette"
-                  onClick={this.handleClickDelete(palette.id)}
+                  className="palette-expand-button"
+                  src={downImg}
+                  alt="Expand palette info"
                 />
               ) : (
-                <b className="palette-bold">...</b>
+                <img
+                  className="palette-expand-button"
+                  src={upImg}
+                  alt="Expand palette info"
+                  onClick={this.handleClickExpand}
+                />
               )}
             </span>
           </div>

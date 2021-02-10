@@ -9,6 +9,10 @@ import './Nav.css';
 export class Nav extends Component {
   static contextType = Context;
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   handleMenuClick = (e) => {
     e.preventDefault();
     this.context.handleShowMenu();

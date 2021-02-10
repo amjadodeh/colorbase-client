@@ -21,33 +21,42 @@
   background-color: #bbb;
 }
 
-.palette-delete {
-  position: relative;
-  width: 18px;
-  float: right;
-  /* top: 150px; */
-  /* right: 15px; */
-}
-
 .palette-bottom-div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   font-weight: lighter;
   color: #757575;
 }
 
 .palette-span-1 {
   margin: 2px 0 2px 13px;
-}
-
-.palette-span-2 {
-  margin: 2px 13px 1px 0;
+  text-align: left;
 }
 
 .palette-span-1 > a {
   color: #000;
   font-weight: normal;
   text-decoration: none;
+}
+
+.palette-span-2 {
+  position: absolute;
+  padding: 2px 15px 15px 15px;
+  margin: 2px 13px 1px 0;
+  right: 8px;
+}
+
+.palette-expand-button {
+  width: 15px;
+  height: 15px;
+}
+
+/* .palette-delete-span {
+  position: relative;
+} */
+
+.palette-delete-span > a {
+  color: #ff0000;
 }
