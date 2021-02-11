@@ -35,7 +35,7 @@ export class SignInPage extends Component {
       return this.setState({
         usernameError: 'Invalid characters',
       });
-    } else if (username.length > 15) {
+    } else if (username.length >= 16) {
       return this.setState({
         usernameError: 'Username must be less than 16 characters',
       });
@@ -94,6 +94,7 @@ export class SignInPage extends Component {
               type="text"
               name="username"
               id="username"
+              maxLength="15"
             />
           </div>
           <div className="signup-form-password-div">
