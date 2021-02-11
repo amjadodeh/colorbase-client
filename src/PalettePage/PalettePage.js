@@ -21,6 +21,7 @@ export class PalettePage extends Component {
     showPaletteName: false,
     palette_name: '',
     copied: '',
+    limitMessage: '',
     colors: [],
   };
 
@@ -114,7 +115,14 @@ export class PalettePage extends Component {
 
   handleAddColor = () => {
     if (this.state.colors.length >= 10) {
-      alert('you have reached the maximum color palette limit');
+      this.setState({
+        limitMessage: 'maximum',
+      });
+      setTimeout(() => {
+        this.setState({
+          limitMessage: '',
+        });
+      }, 2000);
     } else {
       const newHex =
         '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0');
@@ -168,7 +176,14 @@ export class PalettePage extends Component {
 
   handleRemoveColor = (colorId) => () => {
     if (this.state.colors.length <= 2) {
-      alert('you have reached the minimum color palette limit');
+      this.setState({
+        limitMessage: 'minimum',
+      });
+      setTimeout(() => {
+        this.setState({
+          limitMessage: '',
+        });
+      }, 2000);
     } else {
       this.setState({
         colors: this.state.colors.filter((color) => color.id !== colorId),
@@ -311,6 +326,11 @@ export class PalettePage extends Component {
               </section>
             </div>
           </>
+        ) : null}
+        {this.state.limitMessage ? (
+          <div className="palette-maker-limit-message">
+            You have reached the {this.state.limitMessage} color palette limit!
+          </div>
         ) : null}
       </div>
     );

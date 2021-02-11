@@ -46,9 +46,8 @@
   width: 20px;
 }
 
-.palette-maker-copied-message {
-  background-color: #d2fbd0;
-  color: #50854e;
+.palette-maker-copied-message,
+.palette-maker-limit-message {
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 15px;
@@ -58,6 +57,16 @@
   margin-right: -50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+}
+
+.palette-maker-copied-message {
+  background-color: #d2fbd0;
+  color: #50854e;
+}
+
+.palette-maker-limit-message {
+  background-color: #fbd0d0;
+  color: #854e4e;
 }
 
 .palette-maker-palette-options {
