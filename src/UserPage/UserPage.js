@@ -376,7 +376,7 @@ export class UserPage extends Component {
             <>
               {' '}
               <hr className="user-page-hr" />
-              <div>Your Palettes</div>
+              <div className="user-page-your-palettes-div">My Palettes</div>
               <br />
               <PaletteList palettes={palettes} userId={userId} />
               <Footer />
@@ -401,7 +401,9 @@ export class UserPage extends Component {
 
             <hr className="user-page-hr" />
 
-            <div>{user.username}'s Palettes</div>
+            <div className="user-page-your-palettes-div">
+              {user.username}'s Palettes
+            </div>
 
             <br />
 

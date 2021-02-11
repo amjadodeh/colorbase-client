@@ -75,7 +75,8 @@
   background-color: #f7f7f7;
 }
 
-/* .user-page-edit-profile-overlay a:hover,
-.user-page-edit-profile-overlay a:focus {
-  color: #f1f1f1;
-} */
+.user-page-your-palettes-div {
+  text-decoration: underline;
+  text-decoration-color: gray;
+  text-decoration-style: dotted;
+}
