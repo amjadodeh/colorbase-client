@@ -85,7 +85,6 @@ class App extends Component {
           return res.json();
         })
         .then((response) => {
-          console.log(response);
           if (method === 'get') {
             if (endpoint === 'palettes') {
               this.setState({ palettes: response });
