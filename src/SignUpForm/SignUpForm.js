@@ -17,7 +17,7 @@ export class SignInPage extends Component {
     passwordError: '',
   };
 
-  validateSignUp = () => {
+  validateSignUp() {
     const { username, password, repeatPassword } = this.state.signUp;
     const { users = [] } = this.context;
 
@@ -48,7 +48,7 @@ export class SignInPage extends Component {
     }
 
     return true;
-  };
+  }
 
   handleShowPassword = (e) => {
     e.preventDefault();
