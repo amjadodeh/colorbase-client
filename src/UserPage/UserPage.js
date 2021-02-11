@@ -16,39 +16,87 @@ export class UserPage extends Component {
     deletionStarted: false,
     deletionPass: '',
     signOutVerify: false,
-    editProfile: false,
+    editUsername: false,
+    editPicture: false,
     newPicture: '',
     newUsername: '',
+    usernameError: '',
+    pictureError: '',
+    deleteError: '',
+    editingOptionOpen: '',
   };
 
   checkURL(url) {
     return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
   }
 
+  handleCloseEditingOption = () => {
+    this.setState({
+      editingOptionOpen: '',
+    });
+  };
+
   checkUsername(username) {
     const { users = [] } = this.context;
 
     if (users.find((user) => user.username === username)) {
-      return alert('Username is taken');
+      return this.setState({
+        usernameError: 'Username is taken',
+      });
     } else if (!/^\w+$/.test(username)) {
-      return alert('Invalid characters');
+      return this.setState({
+        usernameError: 'Invalid characters',
+      });
     }
 
     return true;
   }
 
-  handleShowInput = () => {
-    this.setState({
-      editProfile: !this.state.editProfile,
-    });
+  handleShowInput = (which) => () => {
+    if (which === 'username') {
+      if (this.state.editingOptionOpen !== 'username') {
+        this.setState({
+          editingOptionOpen: 'username',
+        });
+        this.setState({
+          editUsername: true,
+        });
+      } else {
+        this.handleCloseEditingOption();
+        this.setState({
+          editUsername: false,
+        });
+      }
+    }
+    if (which === 'picture') {
+      if (this.state.editingOptionOpen !== 'picture') {
+        this.setState({
+          editingOptionOpen: 'picture',
+        });
+        this.setState({
+          editPicture: true,
+        });
+      } else {
+        this.handleCloseEditingOption();
+        this.setState({
+          editPicture: false,
+        });
+      }
+    }
   };
 
   handleClickDeleteUser = (go) => () => {
+    if (this.state.editingOptionOpen !== 'delete') {
+      this.setState({
+        editingOptionOpen: 'delete',
+      });
+    }
     this.setState({
       deletionStarted: true,
     });
 
     if (go === 'Back') {
+      this.handleCloseEditingOption();
       return this.setState({
         deletionStarted: false,
       });
@@ -57,13 +105,18 @@ export class UserPage extends Component {
         this.context.handleDeleteUser(this.context.signedInAs.user.id);
         this.props.history.push(`/`);
       } else {
-        return alert('Incorrect username');
+        return this.setState({
+          deleteError: 'Incorrect username',
+        });
       }
     }
   };
 
   handleClickSignOut = (step, yes) => () => {
     if (step === 1) {
+      this.setState({
+        editingOptionOpen: 'signout',
+      });
       this.setState({
         signOutVerify: true,
       });
@@ -74,6 +127,7 @@ export class UserPage extends Component {
       this.context.handleSignOutUser();
       this.props.history.push(`/`);
     } else {
+      this.handleCloseEditingOption();
       this.setState({
         signOutVerify: false,
       });
@@ -98,34 +152,50 @@ export class UserPage extends Component {
     });
   };
 
-  handleSubmit = (e) => {
-    if (!this.state.newUsername && !this.state.newPicture) {
-      return alert('Please enter a what you want to change');
-    }
+  handleSubmit = (which) => (e) => {
+    if (which === 'username') {
+      if (!this.state.newUsername) {
+        return this.setState({
+          usernameError: 'Please enter a new username',
+        });
+      }
 
-    if (this.state.newUsername) {
-      if (!this.checkUsername(this.state.newUsername)) {
-        return alert('Username invalid!');
+      if (this.state.newUsername) {
+        if (this.checkUsername(this.state.newUsername)) {
+          this.setState({
+            editUsername: !this.state.editUsername,
+          });
+
+          this.context.handleChangeUserInfo(this.state.newUsername);
+        }
       }
     }
 
-    if (this.state.newPicture) {
-      if (!this.checkURL(this.state.newPicture)) {
-        return alert('not an image!');
+    if (which === 'picture') {
+      if (!this.state.newPicture) {
+        return this.setState({
+          pictureError: 'Please enter a new picture url',
+        });
       }
+
+      if (this.state.newPicture) {
+        return this.setState({
+          pictureError: 'Not a picture url!',
+        });
+      }
+
+      this.setState({
+        editPicture: !this.state.editPicture,
+      });
+
+      this.context.handleChangeUserInfo(this.state.newPicture);
     }
-
-    this.setState({
-      editProfile: !this.state.editProfile,
-    });
-
-    this.context.handleChangeUserInfo(
-      this.state.newUsername,
-      this.state.newPicture
-    );
   };
 
   handleClickEdit = () => {
+    if (this.state.editingOptionOpen) {
+      this.handleCloseEditingOption();
+    }
     this.setState({
       editMode: !this.state.editMode,
     });
@@ -140,7 +210,7 @@ export class UserPage extends Component {
           <Nav />
           <img
             className="user-page-edit-profile"
-            src={this.state.editMode ? xImg : editImg}
+            src={editImg}
             alt="Edit profile"
             onClick={this.handleClickEdit}
           />
@@ -152,88 +222,160 @@ export class UserPage extends Component {
             />
             <h1>{signedInAs.user.username}</h1>
             {this.state.editMode ? (
-              <>
-                {this.state.editProfile ? (
-                  <div>
-                    <label htmlFor="user-page-username">Username</label>
-                    <input
-                      type="text"
-                      id="user-page-username"
-                      name="username-input"
-                      value={this.state.newUsername}
-                      onChange={this.onChangeUsername}
-                      required
-                    />
-                    <label htmlFor="user-page-picture-url">Picture Url</label>
-                    <input
-                      type="text"
-                      id="user-page-picture-url"
-                      name="picture-url-input"
-                      value={this.state.newPicture}
-                      onChange={this.onChangeUrl}
-                      required
-                    />
-                    <button onClick={this.handleShowInput}>
-                      Changed your mind?
+              <div className="user-page-edit-profile-overlay">
+                <div className="user-page-settings-top">
+                  <div>Account Settings</div>
+                  <img
+                    className="user-page-edit-profile-btn"
+                    src={xImg}
+                    alt="Edit profile"
+                    onClick={this.handleClickEdit}
+                  />
+                </div>
+                <div className="user-page-edit-profile-overlay-content">
+                  {this.state.editUsername &&
+                  this.state.editingOptionOpen === 'username' ? (
+                    <>
+                      <p>Enter your new username</p>
+                      <input
+                        type="text"
+                        placeholder="Username"
+                        id="user-page-username"
+                        name="username-input"
+                        value={this.state.newUsername}
+                        onChange={this.onChangeUsername}
+                        required
+                      />
+                      <br />
+                      {this.state.usernameError ? (
+                        <span className="user-page-error-message">
+                          {this.state.usernameError}
+                        </span>
+                      ) : null}
+                      <br />
+                      <button onClick={this.handleSubmit('username')}>
+                        Submit
+                      </button>
+                      <button onClick={this.handleShowInput('username')}>
+                        Back
+                      </button>
+                    </>
+                  ) : this.state.editingOptionOpen ? null : (
+                    <button onClick={this.handleShowInput('username')}>
+                      Change username
                     </button>
-                    <button onClick={this.handleSubmit}>Submit</button>
-                  </div>
-                ) : (
-                  <button onClick={this.handleShowInput}>Edit profile?</button>
-                )}
-                {this.state.signOutVerify ? (
-                  <>
-                    <p>Signing out already?</p>
-                    <button onClick={this.handleClickSignOut(2, false)}>
-                      No
+                  )}
+                  {this.state.editPicture &&
+                  this.state.editingOptionOpen === 'picture' ? (
+                    <>
+                      <p>Enter a link to your new picture</p>
+                      <input
+                        type="text"
+                        placeholder="Picture Url"
+                        id="user-page-picture-url"
+                        name="picture-url-input"
+                        value={this.state.newPicture}
+                        onChange={this.onChangeUrl}
+                        required
+                      />
+                      <br />
+                      {this.state.pictureError ? (
+                        <span className="user-page-error-message">
+                          {this.state.pictureError}
+                        </span>
+                      ) : null}
+                      <br />
+                      <button onClick={this.handleSubmit('picture')}>
+                        Submit
+                      </button>
+                      <button onClick={this.handleShowInput('picture')}>
+                        Back
+                      </button>
+                    </>
+                  ) : this.state.editingOptionOpen ? null : (
+                    <button onClick={this.handleShowInput('picture')}>
+                      Change profile picture
                     </button>
-                    <button onClick={this.handleClickSignOut(2, true)}>
-                      Yes
+                  )}
+                  <br />
+                  {this.state.signOutVerify &&
+                  this.state.editingOptionOpen === 'signout' ? (
+                    <>
+                      <p>Sign out now?</p>
+                      <button onClick={this.handleClickSignOut(2, true)}>
+                        Yes
+                      </button>
+                      <button onClick={this.handleClickSignOut(2, false)}>
+                        No
+                      </button>
+                    </>
+                  ) : this.state.editingOptionOpen ? null : (
+                    <button onClick={this.handleClickSignOut(1)}>
+                      Sign Out
                     </button>
-                  </>
-                ) : (
-                  <button onClick={this.handleClickSignOut(1)}>Sign Out</button>
-                )}
-                {!this.state.deletionStarted ? (
-                  <button onClick={this.handleClickDeleteUser()}>
-                    Delete my account
-                  </button>
-                ) : (
-                  <>
-                    <div>
-                      PLEASE READ CAREFULLY: Deleting an account is permanent.
-                      Your account and all data linked to it will be lost
-                      forever. This CAN NOT be reversed. If you understand and
-                      still want to continue, enter your username below and
-                      submit.
-                    </div>
-                    <p>{signedInAs.user.username}</p>
-                    <input
-                      type="text"
-                      id="user-page-account-deletion"
-                      name="user-page-account-deletion"
-                      value={this.state.deletionPass}
-                      onChange={this.onChangeDeletionPass}
-                      required
-                    />
+                  )}
+                  <br />
+                  {this.state.deletionStarted &&
+                  this.state.editingOptionOpen === 'delete' ? (
+                    <>
+                      <div>
+                        <span style={{ color: 'red' }}>
+                          PLEASE READ CAREFULLY:
+                        </span>
+                        <br />
+                        Deleting an account is <b>permanent</b>. Your account
+                        and <b>all data</b> linked to it will be lost forever.{' '}
+                        <b>This CAN NOT be reversed!</b> If you understand and
+                        still want to continue, enter your username below and
+                        submit.
+                      </div>
+                      <p style={{ color: 'gray' }}>
+                        <i>{signedInAs.user.username}</i>
+                      </p>
+                      <input
+                        type="text"
+                        placeholder="Enter username here"
+                        id="user-page-account-deletion"
+                        name="user-page-account-deletion"
+                        value={this.state.deletionPass}
+                        style={{ textAlign: 'center' }}
+                        onChange={this.onChangeDeletionPass}
+                        required
+                      />
+                      <br />
+                      {this.state.deleteError ? (
+                        <span className="user-page-error-message">
+                          {this.state.deleteError}
+                        </span>
+                      ) : null}
+                      <br />
+                      <button
+                        onClick={this.handleClickDeleteUser('DELETE ACCOUNT')}
+                        style={{ color: 'red' }}
+                      >
+                        DELETE MY ACCOUNT
+                      </button>
+                      <button onClick={this.handleClickDeleteUser('Back')}>
+                        Back
+                      </button>
+                    </>
+                  ) : this.state.editingOptionOpen ? null : (
                     <button
-                      onClick={this.handleClickDeleteUser('DELETE ACCOUNT')}
+                      onClick={this.handleClickDeleteUser()}
+                      style={{ color: 'red' }}
                     >
-                      DELETE MY ACCOUNT
+                      Delete my account
                     </button>
-                    <button onClick={this.handleClickDeleteUser('Back')}>
-                      Back
-                    </button>
-                  </>
-                )}
-              </>
+                  )}
+                </div>
+              </div>
             ) : null}
           </header>
 
           {this.state.editMode ? null : (
             <>
               {' '}
-              <hr />
+              <hr className="user-page-hr" />
               <div>Your Palettes</div>
               <br />
               <PaletteList palettes={palettes} userId={userId} />
@@ -257,7 +399,7 @@ export class UserPage extends Component {
               <h1>{user.username}</h1>
             </header>
 
-            <hr />
+            <hr className="user-page-hr" />
 
             <div>{user.username}'s Palettes</div>
 

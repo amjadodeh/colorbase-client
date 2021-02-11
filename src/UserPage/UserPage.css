@@ -14,3 +14,68 @@
   right: 20px;
   top: 70px;
 }
+
+.user-page-hr {
+  border: 1px solid #d9d9d9;
+}
+
+.user-page-error-message {
+  color: red;
+  font-size: 14px;
+}
+
+.user-page-settings-top {
+  top: 0;
+  padding-bottom: 5px;
+  margin: 0 auto;
+  width: 100%;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.user-page-settings-top > * {
+  margin: 10px auto;
+}
+
+.user-page-edit-profile-btn {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 20px;
+  top: 8px;
+}
+
+.user-page-edit-profile-overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #ffffff;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.user-page-edit-profile-overlay-content {
+  position: relative;
+  top: 0;
+  width: 100%;
+}
+
+.user-page-edit-profile-overlay-content > button {
+  font-weight: bold;
+  width: 100%;
+  font-size: 14px;
+  padding: 40px 12px;
+  background-color: #fff;
+  border: 1px solid #ededee;
+}
+
+.user-page-edit-profile-overlay-content > *:active {
+  background-color: #f7f7f7;
+}
+
+/* .user-page-edit-profile-overlay a:hover,
+.user-page-edit-profile-overlay a:focus {
+  color: #f1f1f1;
+} */
