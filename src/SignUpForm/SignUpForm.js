@@ -35,6 +35,10 @@ export class SignInPage extends Component {
       return this.setState({
         usernameError: 'Invalid characters',
       });
+    } else if (username.length > 15) {
+      return this.setState({
+        usernameError: 'Username must be less than 16 characters',
+      });
     }
 
     if (password !== repeatPassword) {
