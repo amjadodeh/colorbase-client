@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-@media (min-width: 1050px) {
+@media (min-width: 800px) {
   .palette-list-container {
     flex-direction: row;
     justify-content: center;

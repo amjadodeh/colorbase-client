@@ -12,7 +12,7 @@
 .palette-colors {
   display: flex;
   flex-direction: row;
-  height: 100px;
+  height: 145px;
 }
 
 .palette-color {
@@ -27,7 +27,7 @@
   justify-content: space-between;
   align-items: flex-start;
   font-weight: lighter;
-  color: #757575;
+  color: #646369;
 }
 
 .palette-span-1 {
