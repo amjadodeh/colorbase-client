@@ -119,7 +119,7 @@
 }
 
 .palette-maker-palette-name-input-section {
-  padding: 40px 20px;
+  padding: 50px 20px 40px 20px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -158,4 +158,9 @@
 
 .palette-maker-palette-name-upload-button:active {
   background-color: #0052cc;
+}
+
+.palette-maker-palette-name-error {
+  color: #ff0000;
+  font-size: 14px;
 }

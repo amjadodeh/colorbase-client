@@ -23,6 +23,7 @@ export class PalettePage extends Component {
     copied: '',
     limitMessage: '',
     colors: [],
+    paletteNameError: '',
   };
 
   componentDidMount() {
@@ -79,6 +80,24 @@ export class PalettePage extends Component {
         ],
       });
     }
+  }
+
+  validatePaletteName() {
+    const { palette_name } = this.state;
+
+    if (!palette_name) {
+      return this.setState({
+        paletteNameError: 'Please enter a palette name',
+      });
+    }
+
+    if (palette_name.length >= 26) {
+      return this.setState({
+        paletteNameError: 'Palette name must be less than 26 characters',
+      });
+    }
+
+    return true;
   }
 
   handleChangeName = (e) => {
@@ -140,16 +159,18 @@ export class PalettePage extends Component {
 
   handleUpload = () => {
     if (this.context.signedInAs.user) {
-      const hexValues = [this.state.colors.map((color) => color.colorHex)];
+      if (this.validatePaletteName()) {
+        const hexValues = [this.state.colors.map((color) => color.colorHex)];
 
-      const newPalette = {
-        palette_name: this.state.palette_name,
-        hex: hexValues.toString(),
-        user_id: this.context.signedInAs.user.id,
-      };
+        const newPalette = {
+          palette_name: this.state.palette_name,
+          hex: hexValues.toString(),
+          user_id: this.context.signedInAs.user.id,
+        };
 
-      this.context.handleUploadPalette(newPalette);
-      this.props.history.push(`/user/${this.context.signedInAs.user.id}`);
+        this.context.handleUploadPalette(newPalette);
+        this.props.history.push(`/user/${this.context.signedInAs.user.id}`);
+      }
     } else {
       this.context.handleShowSignIn();
     }
@@ -315,8 +336,12 @@ export class PalettePage extends Component {
                   placeholder="Palette name"
                   type="text"
                   name="palette-maker-palette-name"
+                  maxLength="25"
                   onChange={this.handleChangeName}
                 />
+                <span className="palette-maker-palette-name-error">
+                  {this.state.paletteNameError}
+                </span>
                 <button
                   className="palette-maker-palette-name-upload-button"
                   onClick={this.handleUpload}
