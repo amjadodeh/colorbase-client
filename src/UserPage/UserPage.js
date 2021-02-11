@@ -166,6 +166,7 @@ export class UserPage extends Component {
         });
 
         this.context.handleChangeUserInfo(this.state.newUsername);
+        this.handleClickEdit();
       }
     }
 
@@ -182,6 +183,7 @@ export class UserPage extends Component {
         });
 
         this.context.handleChangeUserInfo(null, this.state.newPicture);
+        this.handleClickEdit();
       } else {
         return this.setState({
           pictureError: 'Not a picture url!',
