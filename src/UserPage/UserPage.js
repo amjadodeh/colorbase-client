@@ -160,14 +160,12 @@ export class UserPage extends Component {
         });
       }
 
-      if (this.state.newUsername) {
-        if (this.checkUsername(this.state.newUsername)) {
-          this.setState({
-            editUsername: !this.state.editUsername,
-          });
+      if (this.checkUsername(this.state.newUsername)) {
+        this.setState({
+          editUsername: !this.state.editUsername,
+        });
 
-          this.context.handleChangeUserInfo(this.state.newUsername);
-        }
+        this.context.handleChangeUserInfo(this.state.newUsername);
       }
     }
 
@@ -178,17 +176,17 @@ export class UserPage extends Component {
         });
       }
 
-      if (this.state.newPicture) {
+      if (this.checkURL(this.state.newPicture)) {
+        this.setState({
+          editPicture: !this.state.editPicture,
+        });
+
+        this.context.handleChangeUserInfo(this.state.newPicture);
+      } else {
         return this.setState({
           pictureError: 'Not a picture url!',
         });
       }
-
-      this.setState({
-        editPicture: !this.state.editPicture,
-      });
-
-      this.context.handleChangeUserInfo(this.state.newPicture);
     }
   };
 
