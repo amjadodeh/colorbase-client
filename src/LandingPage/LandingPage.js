@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import paletteExample from '../images/palette-example.png';
+import paletteMakerExample from '../images/palette-maker-example.png';
+import ExplorePalettesExample from '../images/explore-palettes-example.png';
 import Nav from '../Nav/Nav';
-// import Footer from '../Footer/Footer';
+import Footer from '../Footer/Footer';
 import './LandingPage.css';
 
 export class LandingPage extends Component {
@@ -14,7 +17,7 @@ export class LandingPage extends Component {
           <header className="landing-header">
             <h1>Find the perfect color palette for you!</h1>
             <h4>
-              Create the perfect color scheme for your project or get inspired
+              Create the perfect color palette for your project or get inspired
               by popular color palettes created by other users!
             </h4>
             <Link to="/palette-maker">
@@ -28,34 +31,35 @@ export class LandingPage extends Component {
             </Link>
           </header>
 
-          {/* <section className="landing-section">
+          <section className="landing-section">
             <header>
-              <h3>The Perfect Colors</h3>
+              <h3>The Perfect Palette</h3>
             </header>
-            <p>
-              [<em>placeholder for image</em>]
-            </p>
+            <img
+              className="landing-img"
+              src={paletteExample}
+              alt="Palette example"
+            />
             <p>
               ColorStop is the essential tool for creating and exploring color
-              palettes. Every brand, website, app, game, book, artwork,
-              presentation, and even your very own living room needs a good
-              color scheme. You can you find the perfect colors for your project
-              here on the best color scheme sharing platform for you.
+              palettes.
             </p>
           </section>
 
           <section className="landing-section">
             <header>
-              <h3>Simple, Easy, Palette Maker Interface</h3>
+              <h3>Simple, Fast, Palette Maker</h3>
             </header>
+            <img
+              className="landing-img"
+              src={paletteMakerExample}
+              alt="Palette example"
+            />
             <p>
-              [<em>placeholder for image</em>]
-            </p>
-            <p>
-              With ColorStop you can create your perfect color scheme, even if
-              you are not skilled in design. By pressing 'randomize' button on
-              the Palette Maker Page, randomly generate color palettes until you
-              find the perfect one for you!
+              You can create your perfect color palette, even if you are not
+              skilled in design. Press 'randomize' on the Palette Maker page to
+              randomly generate color palettes until you find the perfect one
+              for you!
             </p>
           </section>
 
@@ -63,16 +67,18 @@ export class LandingPage extends Component {
             <header>
               <h3>Explore Color Palettes</h3>
             </header>
-            <p>
-              [<em>placeholder for image</em>]
-            </p>
+            <img
+              className="landing-img"
+              src={ExplorePalettesExample}
+              alt="Palette example"
+            />
             <p>
               ColorStop has a huge collection of color palettes that are well
-              organized and ready to be used by you!
+              organized and ready to be used!
             </p>
-          </section> */}
+          </section>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </>
     );
   }
