@@ -31,52 +31,54 @@ export class LandingPage extends Component {
             </Link>
           </header>
 
-          <section className="landing-section">
-            <header>
-              <h3>The Perfect Palette</h3>
-            </header>
-            <img
-              className="landing-img"
-              src={paletteExample}
-              alt="Palette example"
-            />
-            <p>
-              ColorStop is the essential tool for creating and exploring color
-              palettes.
-            </p>
-          </section>
+          <div className="landing-sections-div">
+            <section className="landing-section">
+              <header>
+                <h3>The Perfect Palette</h3>
+              </header>
+              <img
+                className="landing-img"
+                src={paletteExample}
+                alt="Palette example"
+              />
+              <p>
+                ColorStop is the essential tool for creating and exploring color
+                palettes.
+              </p>
+            </section>
 
-          <section className="landing-section">
-            <header>
-              <h3>Simple, Fast, Palette Maker</h3>
-            </header>
-            <img
-              className="landing-img"
-              src={paletteMakerExample}
-              alt="Palette example"
-            />
-            <p>
-              You can create your perfect color palette, even if you are not
-              skilled in design. Press 'randomize' on the Palette Maker page to
-              randomly generate color palettes until you find the perfect one
-              for you!
-            </p>
-          </section>
+            <section className="landing-section">
+              <header>
+                <h3>Simple, Fast, Palette Maker</h3>
+              </header>
+              <img
+                className="landing-img"
+                src={paletteMakerExample}
+                alt="Palette example"
+              />
+              <p>
+                Create the perfect color palette, even if you are not skilled in
+                design. Press 'Randomize!' on the Palette Maker to randomly
+                generate color palettes until you find the perfect colors for
+                you!
+              </p>
+            </section>
 
-          <section className="landing-section">
-            <header>
-              <h3>Explore Color Palettes</h3>
-            </header>
-            <img
-              className="landing-img"
-              src={ExplorePalettesExample}
-              alt="Palette example"
-            />
-            <p>
-              ColorStop has a huge collection of color palettes that are well
-              organized and ready to be used!
-            </p>
-          </section>
+            <section className="landing-section">
+              <header>
+                <h3>Explore Color Palettes</h3>
+              </header>
+              <img
+                className="landing-img"
+                src={ExplorePalettesExample}
+                alt="Palette example"
+              />
+              <p>
+                ColorStop has a huge collection of color palettes that are well
+                organized and ready to be used!
+              </p>
+            </section>
+          </div>
         </div>
         <Footer />
       </>

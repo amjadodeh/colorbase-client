@@ -132,6 +132,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
+  max-width: 500px;
 }
 
 .palette-maker-palette-name-input {

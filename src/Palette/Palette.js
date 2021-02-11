@@ -49,7 +49,11 @@ export class Palette extends Component {
                             backgroundColor: `${hex}`,
                             borderRadius: '15px 0px 0px 0px',
                           }
-                        : palette.hex.length - 1 === i
+                        : i ===
+                          palette.hex
+                            .split(',')
+                            .filter((hex) => (hex ? hex : null)).length -
+                            1
                         ? {
                             backgroundColor: `${hex}`,
                             borderRadius: '0px 15px 0px 0px',
@@ -109,7 +113,11 @@ export class Palette extends Component {
                             backgroundColor: `${hex}`,
                             borderRadius: '15px 0px 0px 0px',
                           }
-                        : palette.hex.length - 1 === i
+                        : i ===
+                          palette.hex
+                            .split(',')
+                            .filter((hex) => (hex ? hex : null)).length -
+                            1
                         ? {
                             backgroundColor: `${hex}`,
                             borderRadius: '0px 15px 0px 0px',
