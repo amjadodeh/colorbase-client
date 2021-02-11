@@ -181,7 +181,7 @@ export class UserPage extends Component {
           editPicture: !this.state.editPicture,
         });
 
-        this.context.handleChangeUserInfo(this.state.newPicture);
+        this.context.handleChangeUserInfo(null, this.state.newPicture);
       } else {
         return this.setState({
           pictureError: 'Not a picture url!',
