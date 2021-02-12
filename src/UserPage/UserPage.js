@@ -14,7 +14,7 @@ export class UserPage extends Component {
   state = {
     editMode: false,
     deletionStarted: false,
-    deletionPass: '',
+    deletionInput: '',
     signOutVerify: false,
     editUsername: false,
     editPicture: false,
@@ -101,7 +101,7 @@ export class UserPage extends Component {
         deletionStarted: false,
       });
     } else if (go === 'DELETE ACCOUNT') {
-      if (this.state.deletionPass === this.context.signedInAs.user.username) {
+      if (this.state.deletionInput === this.context.signedInAs.user.username) {
         this.context.handleDeleteUser(this.context.signedInAs.user.id);
         this.props.history.push(`/`);
       } else {
@@ -146,9 +146,9 @@ export class UserPage extends Component {
     });
   };
 
-  onChangeDeletionPass = (e) => {
+  onChangeDeletionInput = (e) => {
     this.setState({
-      deletionPass: e.target.value,
+      deletionInput: e.target.value,
     });
   };
 
@@ -337,9 +337,9 @@ export class UserPage extends Component {
                         placeholder="Enter username here"
                         id="user-page-account-deletion"
                         name="user-page-account-deletion"
-                        value={this.state.deletionPass}
+                        value={this.state.deletionInput}
                         style={{ textAlign: 'center' }}
-                        onChange={this.onChangeDeletionPass}
+                        onChange={this.onChangeDeletionInput}
                         required
                       />
                       <br />
