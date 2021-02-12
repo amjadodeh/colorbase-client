@@ -114,6 +114,7 @@ export class SignInPage extends Component {
             />
             <button
               className="signin-form-password-show-button"
+              type="button"
               onClick={this.handleShowPassword}
             >
               {this.state.showPassword ? 'Hide' : 'Show'}
