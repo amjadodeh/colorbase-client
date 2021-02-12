@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# ColorStop Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Create the perfect color palette for your project or get inspired by popular color palettes created by other users!
 
-## Available Scripts
+This repo is the front-end client, built in React. You can see the app live at [https://colorstop-client.vercel.app](https://colorstop-client.vercel.app)
 
-In the project directory, you can run:
+I suggest you create an account so you can upload palettes and save them on your account. But, if you just want to view what the website looks like and browse palettes, you can do so without an account.
 
-### `npm start`
+## Introduction
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ColorStop is the essential tool for creating and exploring color palettes. Create the perfect color palette, even if you are not skilled in design. Press 'Randomize!' on the Palette Maker to randomly generate color palettes until you find the perfect colors for you! ColorStop has a huge collection of color palettes that are well organized and ready to be used!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Screenshots
 
-### `npm test`
+Landing Page:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![landing page](https://i.imgur.com/hMlZ5p5.png)
 
-### `npm run build`
+Navigation Menu:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![navigation menu](https://i.imgur.com/YvoI6cg.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Browse Palettes Page:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![browse palettes](https://i.imgur.com/FoQeFQG.png)
 
-### `npm run eject`
+Palette Maker Page:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![palette maker](https://i.imgur.com/qmPE2jA.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Copy Hex/ Remove Color/ Lock Color (prevents color from being randomized when that button is pressed):
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![palette color options](https://i.imgur.com/JTWMdgm.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Sign in to upload:
 
-## Learn More
+![sign in](https://i.imgur.com/7JQyWWo.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Enter your new palette name and upload:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![palette name](https://i.imgur.com/WhFrbaq.png)
 
-### Code Splitting
+## Technology
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### Front End
 
-### Analyzing the Bundle Size
+- React
+  - Create React App
+  - React Router
+- HTML5
+- CSS3 (scratch - no frameworks)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Testing
 
-### Making a Progressive Web App
+- Jest (smoke tests)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### Production
 
-### Advanced Configuration
+- Deployed via Vercel
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Getting Started
 
-### Deployment
+Run `npm install` to load dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Run `npm test` to ensure a stable build
 
-### `npm run build` fails to minify
+This is only the front end client, so to develop locally you'll need the backend server as well.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To get the backend up and running see [https://github.com/amjadodeh/colorstop-api](https://github.com/amjadodeh/colorstop-api)
+
+Deployments are handled through Vercel and can be run via `npm run deploy`
