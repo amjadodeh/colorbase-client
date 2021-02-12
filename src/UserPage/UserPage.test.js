@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import UserPage from './UserPage';
 import { createMemoryHistory } from 'history';
 
@@ -12,23 +11,21 @@ it('renders without crashing', () => {
   history.push('/');
 
   ReactDOM.render(
-    <BrowserRouter>
-      <Context.Provider
-        value={{
-          signedInAs: { user: { id: 4 } },
-          users: [
-            {
-              id: 4,
-              username: 'Username',
-              profile_picture:
-                'https://example.com/sdgugaghughfaf/sdfh9ahshfnasdf.jpg',
-            },
-          ],
-        }}
-      >
-        <UserPage match={{ params: 4 }} history={history} />
-      </Context.Provider>
-    </BrowserRouter>,
+    <Context.Provider
+      value={{
+        signedInAs: { user: { id: 4 } },
+        users: [
+          {
+            id: 4,
+            username: 'Username',
+            profile_picture:
+              'https://example.com/sdgugaghughfaf/sdfh9ahshfnasdf.jpg',
+          },
+        ],
+      }}
+    >
+      <UserPage match={{ params: 4 }} history={history} />
+    </Context.Provider>,
     div
   );
   ReactDOM.unmountComponentAtNode(div);
